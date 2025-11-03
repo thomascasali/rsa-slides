@@ -1,4 +1,4 @@
-import { Lock, Book, Code, Zap, Shield, ArrowRight, Terminal } from 'lucide-react';
+import { Lock, Book, Code, Zap, Shield, ArrowRight, Terminal, Key } from 'lucide-react';
 import { getSlideStats, getSlidePosition } from '../data/slides';
 
 interface DashboardProps {
@@ -13,13 +13,21 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
     {
       id: 1,
       title: 'Inizia dall\'inizio',
-      description: 'Introduzione alla Crittografia Asimmetrica',
+      description: 'Introduzione alla Crittografia',
       icon: Book,
       color: 'blue',
       category: 'intro',
     },
     {
       id: 7,
+      title: 'Crittografia Simmetrica',
+      description: 'DES, 3DES, AES e Confronti Prestazionali',
+      icon: Key,
+      color: 'green',
+      category: 'symmetric',
+    },
+    {
+      id: 17,
       title: 'Crittografia Asimmetrica',
       description: 'Algoritmo RSA e Generazione Chiavi',
       icon: Lock,
@@ -27,7 +35,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'asymmetric',
     },
     {
-      id: 12,
+      id: 22,
       title: 'Pratica OpenSSL',
       description: 'Esercitazioni Cross-Platform con OpenSSL',
       icon: Terminal,
@@ -35,7 +43,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'openssl',
     },
     {
-      id: 27,
+      id: 37,
       title: 'Pratica PowerShell',
       description: 'Esercitazioni Windows con Alice e Bob',
       icon: Code,
@@ -43,7 +51,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'practice',
     },
     {
-      id: 47,
+      id: 57,
       title: 'Argomenti Avanzati',
       description: 'Sicurezza, Limitazioni e Applicazioni Reali',
       icon: Shield,
@@ -63,6 +71,12 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       border: 'border-blue-700',
       text: 'text-blue-300',
       hover: 'hover:border-blue-500',
+    },
+    green: {
+      bg: 'bg-gradient-to-br from-green-900/50 to-green-800/50',
+      border: 'border-green-700',
+      text: 'text-green-300',
+      hover: 'hover:border-green-500',
     },
     purple: {
       bg: 'bg-gradient-to-br from-purple-900/50 to-purple-800/50',
@@ -112,18 +126,22 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Statistiche */}
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-12">
           <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/30 border border-blue-700 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold text-blue-300">{stats.total}</div>
-            <div className="text-gray-400 mt-2">Slide Totali</div>
+            <div className="text-gray-400 mt-2">Totali</div>
           </div>
           <div className="bg-gradient-to-br from-indigo-900/30 to-indigo-800/30 border border-indigo-700 rounded-lg p-6 text-center">
-            <div className="text-4xl font-bold text-indigo-300">{stats.byCategory.intro}</div>
+            <div className="text-4xl font-bold text-indigo-300">{stats.byCategory.intro + stats.byCategory.theory}</div>
             <div className="text-gray-400 mt-2">Intro</div>
           </div>
+          <div className="bg-gradient-to-br from-green-900/30 to-green-800/30 border border-green-700 rounded-lg p-6 text-center">
+            <div className="text-4xl font-bold text-green-300">{stats.byCategory.symmetric}</div>
+            <div className="text-gray-400 mt-2">Simmetrica</div>
+          </div>
           <div className="bg-gradient-to-br from-purple-900/30 to-purple-800/30 border border-purple-700 rounded-lg p-6 text-center">
-            <div className="text-4xl font-bold text-purple-300">{stats.byCategory.asymmetric + stats.byCategory.theory}</div>
-            <div className="text-gray-400 mt-2">Teoria</div>
+            <div className="text-4xl font-bold text-purple-300">{stats.byCategory.asymmetric}</div>
+            <div className="text-gray-400 mt-2">Asimmetrica</div>
           </div>
           <div className="bg-gradient-to-br from-teal-900/30 to-teal-800/30 border border-teal-700 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold text-teal-300">{stats.byCategory.openssl}</div>
@@ -184,14 +202,34 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
             <Book className="w-8 h-8 text-blue-400" />
             Contenuti del Corso
           </h2>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             <div>
-              <h3 className="text-xl font-bold text-blue-300 mb-4">📚 Teoria</h3>
+              <h3 className="text-xl font-bold text-blue-300 mb-4">📚 Introduzione</h3>
               <ul className="space-y-2 text-gray-300">
-                <li>• Crittografia Simmetrica vs Asimmetrica</li>
-                <li>• Matematica di Base (Numeri Primi, φ di Eulero)</li>
+                <li>• Cos'è la Crittografia</li>
+                <li>• Simmetrica vs Asimmetrica</li>
+                <li>• Scambio Chiavi e Sicurezza</li>
+                <li>• Matematica di Base RSA</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-green-300 mb-4">🔑 Crittografia Simmetrica</h3>
+              <ul className="space-y-2 text-gray-300">
+                <li>• DES (Data Encryption Standard)</li>
+                <li>• 3DES (Triple DES)</li>
+                <li>• AES (Advanced Encryption Standard)</li>
+                <li>• Confronto Prestazionale</li>
+                <li>• Simmetrica vs Asimmetrica</li>
+                <li>• Benchmark e Velocità</li>
+                <li>• Cifratura Ibrida</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-purple-300 mb-4">🔐 Crittografia Asimmetrica</h3>
+              <ul className="space-y-2 text-gray-300">
                 <li>• Algoritmo RSA - I 5 Passi</li>
-                <li>• Formule di Cifratura e Decifratura</li>
+                <li>• Generazione Chiavi (p, q, n, e, d)</li>
+                <li>• Formule Cifratura/Decifratura</li>
                 <li>• Esempi Numerici Completi</li>
               </ul>
             </div>

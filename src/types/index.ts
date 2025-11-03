@@ -1,6 +1,7 @@
 export type SlideCategory =
   | 'intro'
   | 'theory'
+  | 'symmetric'
   | 'asymmetric'
   | 'openssl'
   | 'practice'

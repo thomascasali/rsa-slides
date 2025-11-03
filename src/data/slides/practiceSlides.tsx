@@ -10,7 +10,7 @@ const CodeBlock = ({ children }: { children: string }) => (
 export const practiceSlides: Slide[] = [
   // Slide 27: Titolo Esercitazione
   {
-    id: 27,
+    id: 47,
     title: 'Esercitazione Pratica RSA',
     category: 'practice',
     content: () => (
@@ -42,7 +42,7 @@ export const practiceSlides: Slide[] = [
 
   // Slide 28: Preparazione Ambiente
   {
-    id: 28,
+    id: 48,
     title: "Preparazione dell'Ambiente",
     category: 'practice',
     content: () => (
@@ -101,7 +101,7 @@ Major  Minor  Build  Revision
 
   // Slide 29: Creazione Struttura
   {
-    id: 29,
+    id: 49,
     title: 'STEP 1: Creazione Struttura',
     category: 'practice',
     content: () => (
@@ -159,7 +159,7 @@ C:\\RSA_LAB
 
   // Slide 30: Setup Terminali
   {
-    id: 30,
+    id: 50,
     title: 'STEP 2: Preparazione Terminali',
     category: 'practice',
     content: () => (
@@ -225,7 +225,7 @@ PS C:\\RSA_Lab\\Bob>`}</CodeBlock>
 
   // Slide 31: Generazione Chiavi Alice
   {
-    id: 31,
+    id: 51,
     title: 'STEP 3: Generazione Chiavi Alice',
     category: 'practice',
     content: () => (
@@ -303,7 +303,7 @@ PS C:\\RSA_Lab\\Alice> dir *.xml`}</CodeBlock>
 
   // Slide 32: Generazione Chiavi Bob
   {
-    id: 32,
+    id: 52,
     title: 'STEP 4: Generazione Chiavi Bob',
     category: 'practice',
     content: () => (
@@ -381,7 +381,7 @@ PS C:\\RSA_Lab\\Bob> dir *.xml`}</CodeBlock>
 
   // Slide 33: Scambio Chiavi Pubbliche
   {
-    id: 33,
+    id: 53,
     title: 'STEP 5: Scambio Chiavi Pubbliche',
     category: 'practice',
     content: () => (
@@ -451,7 +451,7 @@ bob_public.xml, bob_private.xml, alice_public.xml`}
 
   // Slide 34: Alice cifra per Bob
   {
-    id: 34,
+    id: 54,
     title: 'STEP 6: Alice Invia Messaggio a Bob',
     category: 'practice',
     content: () => (
@@ -530,7 +530,7 @@ PS C:\\RSA_Lab\\Alice> Copy-Item "messaggio_per_bob.txt" -Destination "..\\Bob\\
 
   // Slide 35: Bob decifra
   {
-    id: 35,
+    id: 55,
     title: 'STEP 7: Bob Decifra il Messaggio',
     category: 'practice',
     content: () => (
@@ -596,7 +596,7 @@ PS C:\\RSA_Lab\\Bob> $messaggioOriginale`}</CodeBlock>
 
   // Slide 36: Bob risponde
   {
-    id: 36,
+    id: 56,
     title: 'STEP 8: Bob Risponde ad Alice',
     category: 'practice',
     content: () => (
@@ -665,9 +665,9 @@ PS C:\\RSA_Lab\\Alice> $messaggio`}</CodeBlock>
     ),
   },
 
-  // Slide 37: Firma Digitale Intro
+  // Slide 47: Firma Digitale Intro
   {
-    id: 37,
+    id: 47,
     title: 'BONUS: Firma Digitale',
     category: 'practice',
     content: () => (
@@ -717,9 +717,9 @@ PS C:\\RSA_Lab\\Alice> $messaggio`}</CodeBlock>
     ),
   },
 
-  // Slide 38: Alice firma
+  // Slide 48: Alice firma
   {
-    id: 38,
+    id: 48,
     title: 'STEP 9: Alice Firma un Messaggio',
     category: 'practice',
     content: () => (
@@ -793,9 +793,9 @@ PS C:\\RSA_Lab\\Alice> Copy-Item "firma.txt" -Destination "..\\Bob\\"`}</CodeBlo
     ),
   },
 
-  // Slide 39: Bob verifica firma
+  // Slide 49: Bob verifica firma
   {
-    id: 39,
+    id: 49,
     title: 'STEP 10: Bob Verifica la Firma',
     category: 'practice',
     content: () => (
@@ -866,9 +866,9 @@ PS C:\\RSA_Lab\\Bob> if ($valida) {
     ),
   },
 
-  // Slide 40: Test Manomissione
+  // Slide 50: Test Manomissione
   {
-    id: 40,
+    id: 50,
     title: 'STEP 11: Test Sicurezza - Manomissione',
     category: 'practice',
     content: () => (
@@ -934,7 +934,7 @@ PS C:\\RSA_Lab\\Bob> $valida`}</CodeBlock>
   // Slide 41-46: Slide conclusive pratiche - continuo con versione più concisa per ottimizzare spazio
   // Slide 41: Cifratura + Firma Insieme
   {
-    id: 41,
+    id: 51,
     title: 'STEP 12: Cifratura + Firma Insieme',
     category: 'practice',
     content: () => (
@@ -994,7 +994,7 @@ PS C:\\RSA_Lab\\Bob> $valida`}</CodeBlock>
 
   // Slide 42-46: Placeholder per completezza - da espandere
   {
-    id: 42,
+    id: 52,
     title: 'Script Completo Riepilogativo',
     category: 'practice',
     content: () => (
@@ -1026,7 +1026,7 @@ Write-Host "Messaggio: $result" -ForegroundColor Green`}</CodeBlock>
   },
 
   {
-    id: 43,
+    id: 53,
     title: 'Esercizi Proposti',
     category: 'practice',
     content: () => (
@@ -1057,7 +1057,7 @@ Write-Host "Messaggio: $result" -ForegroundColor Green`}</CodeBlock>
   },
 
   {
-    id: 44,
+    id: 54,
     title: 'Best Practices',
     category: 'practice',
     content: () => (
@@ -1086,7 +1086,7 @@ Write-Host "Messaggio: $result" -ForegroundColor Green`}</CodeBlock>
   },
 
   {
-    id: 45,
+    id: 55,
     title: 'Troubleshooting Comune',
     category: 'practice',
     content: () => (
@@ -1113,7 +1113,7 @@ Write-Host "Messaggio: $result" -ForegroundColor Green`}</CodeBlock>
   },
 
   {
-    id: 46,
+    id: 56,
     title: 'Conclusioni Esercitazione',
     category: 'practice',
     content: () => (

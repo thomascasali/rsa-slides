@@ -51,6 +51,7 @@ export function SlideViewer({ initialSlideIndex = 0, onGoHome }: SlideViewerProp
   const categoryColors = {
     intro: 'from-blue-900/50 to-blue-800/50 border-blue-700',
     theory: 'from-indigo-900/50 to-indigo-800/50 border-indigo-700',
+    symmetric: 'from-green-900/50 to-green-800/50 border-green-700',
     asymmetric: 'from-purple-900/50 to-purple-800/50 border-purple-700',
     openssl: 'from-teal-900/50 to-teal-800/50 border-teal-700',
     practice: 'from-orange-900/50 to-orange-800/50 border-orange-700',
