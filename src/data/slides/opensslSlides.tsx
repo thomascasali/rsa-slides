@@ -11,7 +11,7 @@ const CodeBlock = ({ children, language = 'bash' }: { children: string; language
 export const opensslSlides: Slide[] = [
   // Slide 12: Titolo OpenSSL
   {
-    id: 32,
+    id: 37,
     title: 'Esercitazione Pratica con OpenSSL',
     category: 'openssl',
     content: () => (
@@ -39,7 +39,7 @@ export const opensslSlides: Slide[] = [
 
   // Slide 13: Cos'è OpenSSL
   {
-    id: 33,
+    id: 38,
     title: "Cos'è OpenSSL?",
     category: 'openssl',
     content: () => (
@@ -93,7 +93,7 @@ export const opensslSlides: Slide[] = [
 
   // Slide 14: Installazione OpenSSL
   {
-    id: 34,
+    id: 39,
     title: 'Installazione OpenSSL',
     category: 'openssl',
     content: () => (
@@ -141,7 +141,7 @@ openssl version`}</CodeBlock>
 
   // Slide 15: Setup Lab
   {
-    id: 35,
+    id: 40,
     title: 'STEP 1: Setup Laboratorio',
     category: 'openssl',
     content: () => (
@@ -201,7 +201,7 @@ ls -la`}</CodeBlock>
 
   // Slide 16: Generazione Chiavi Alice
   {
-    id: 36,
+    id: 41,
     title: 'STEP 2: Generazione Chiavi Alice',
     category: 'openssl',
     content: () => (
@@ -265,7 +265,7 @@ openssl rsa -in alice_public.pem -pubin -text -noout`}</CodeBlock>
 
   // Slide 17: Generazione Chiavi Bob
   {
-    id: 27,
+    id: 37,
     title: 'STEP 3: Generazione Chiavi Bob',
     category: 'openssl',
     content: () => (
@@ -325,7 +325,7 @@ MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
 
   // Slide 18: Scambio Chiavi Pubbliche
   {
-    id: 28,
+    id: 38,
     title: 'STEP 4: Scambio Chiavi Pubbliche',
     category: 'openssl',
     content: () => (
@@ -393,7 +393,7 @@ alice_public.pem   (🔓 pubblica di Alice)`}
 
   // Slide 19: Alice Cifra per Bob
   {
-    id: 29,
+    id: 39,
     title: 'STEP 5: Alice Invia Messaggio Cifrato a Bob',
     category: 'openssl',
     content: () => (
@@ -461,7 +461,7 @@ ls ../Bob/messaggio_cifrato.bin`}</CodeBlock>
 
   // Slide 20: Bob Decifra
   {
-    id: 30,
+    id: 40,
     title: 'STEP 6: Bob Decifra il Messaggio',
     category: 'openssl',
     content: () => (
@@ -519,7 +519,7 @@ cat messaggio_decifrato.txt`}</CodeBlock>
 
   // Slide 21: Firma Digitale con OpenSSL
   {
-    id: 31,
+    id: 41,
     title: 'STEP 7: Firme Digitali con OpenSSL',
     category: 'openssl',
     content: () => (
@@ -568,7 +568,7 @@ openssl dgst -sha256 -verify alice_public.pem -signature contratto.sig contratto
 
   // Slide 22: Certificati X.509
   {
-    id: 32,
+    id: 37,
     title: 'BONUS: Certificati X.509 Self-Signed',
     category: 'openssl',
     content: () => (
@@ -615,7 +615,7 @@ openssl x509 -in server_cert.pem -text -noout`}</CodeBlock>
 
   // Slide 23: Formati Chiavi
   {
-    id: 33,
+    id: 38,
     title: 'Formati di Chiavi e Conversioni',
     category: 'openssl',
     content: () => (
@@ -680,7 +680,7 @@ openssl pkcs12 -in identity.p12 -out key.pem -nodes`}</CodeBlock>
 
   // Slide 24: Cifratura Ibrida
   {
-    id: 34,
+    id: 39,
     title: 'Cifratura Ibrida: RSA + AES',
     category: 'openssl',
     content: () => (
@@ -733,7 +733,7 @@ openssl enc -d -aes-256-cbc -in documento.enc -out documento_originale.pdf -pass
 
   // Slide 25: Best Practices
   {
-    id: 35,
+    id: 40,
     title: 'Best Practices OpenSSL',
     category: 'openssl',
     content: () => (
@@ -792,7 +792,7 @@ openssl enc -d -aes-256-cbc -in documento.enc -out documento_originale.pdf -pass
 
   // Slide 26: Conclusioni OpenSSL
   {
-    id: 36,
+    id: 41,
     title: 'Conclusioni OpenSSL',
     category: 'openssl',
     content: () => (

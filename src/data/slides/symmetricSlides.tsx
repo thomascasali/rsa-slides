@@ -12,7 +12,7 @@ const ComparisonTable = ({ children }: { children: React.ReactNode }) => (
 export const symmetricSlides: Slide[] = [
   // Slide 7: Titolo Crittografia Simmetrica
   {
-    id: 7,
+    id: 17,
     title: 'Crittografia Simmetrica',
     category: 'symmetric',
     content: () => (
@@ -39,7 +39,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 8: Cos'è la Crittografia Simmetrica
   {
-    id: 8,
+    id: 18,
     title: 'Cos\'è la Crittografia Simmetrica?',
     category: 'symmetric',
     content: () => (
@@ -101,7 +101,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 9: DES (Data Encryption Standard)
   {
-    id: 9,
+    id: 19,
     title: 'DES - Data Encryption Standard',
     category: 'symmetric',
     content: () => (
@@ -166,7 +166,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 10: 3DES (Triple DES)
   {
-    id: 10,
+    id: 20,
     title: '3DES - Triple DES',
     category: 'symmetric',
     content: () => (
@@ -243,7 +243,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 11: AES - Advanced Encryption Standard
   {
-    id: 11,
+    id: 21,
     title: 'AES - Advanced Encryption Standard',
     category: 'symmetric',
     content: () => (
@@ -317,7 +317,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 12: Confronto DES vs 3DES vs AES
   {
-    id: 12,
+    id: 17,
     title: 'Confronto: DES vs 3DES vs AES',
     category: 'symmetric',
     content: () => (
@@ -398,7 +398,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 13: Confronto Simmetrica vs Asimmetrica
   {
-    id: 13,
+    id: 18,
     title: 'Simmetrica vs Asimmetrica',
     category: 'symmetric',
     content: () => (
@@ -462,7 +462,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 14: Benchmark Prestazionali
   {
-    id: 14,
+    id: 19,
     title: 'Benchmark Prestazionali',
     category: 'symmetric',
     content: () => (
@@ -533,7 +533,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 15: Cifratura Ibrida - La Soluzione
   {
-    id: 15,
+    id: 20,
     title: 'Cifratura Ibrida: Il Meglio di Entrambi',
     category: 'symmetric',
     content: () => (
@@ -632,7 +632,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 16: Conclusioni Crittografia Simmetrica
   {
-    id: 16,
+    id: 21,
     title: 'Conclusioni Crittografia Simmetrica',
     category: 'symmetric',
     content: () => (

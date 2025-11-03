@@ -8,7 +8,7 @@ interface DashboardProps {
 export function Dashboard({ onGoToSlide }: DashboardProps) {
   const stats = getSlideStats();
 
-  // Quick-start cards con ID precisi
+  // Quick-start cards con ID precisi (aggiornati dopo riorganizzazione)
   const quickStartCards = [
     {
       id: 1,
@@ -19,7 +19,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'intro',
     },
     {
-      id: 7,
+      id: 12,
       title: 'Crittografia Simmetrica',
       description: 'DES, 3DES, AES e Confronti Prestazionali',
       icon: Key,
@@ -27,15 +27,15 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'symmetric',
     },
     {
-      id: 17,
-      title: 'Crittografia Asimmetrica',
-      description: 'Algoritmo RSA e Generazione Chiavi',
+      id: 22,
+      title: 'Algoritmo RSA',
+      description: 'I 5 Passi di RSA ed Esempi Numerici',
       icon: Lock,
       color: 'purple',
       category: 'asymmetric',
     },
     {
-      id: 22,
+      id: 27,
       title: 'Pratica OpenSSL',
       description: 'Esercitazioni Cross-Platform con OpenSSL',
       icon: Terminal,
@@ -43,7 +43,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'openssl',
     },
     {
-      id: 37,
+      id: 42,
       title: 'Pratica PowerShell',
       description: 'Esercitazioni Windows con Alice e Bob',
       icon: Code,
@@ -51,7 +51,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'practice',
     },
     {
-      id: 57,
+      id: 62,
       title: 'Argomenti Avanzati',
       description: 'Sicurezza, Limitazioni e Applicazioni Reali',
       icon: Shield,

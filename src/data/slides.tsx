@@ -8,14 +8,15 @@ import { practiceSlides } from './slides/practiceSlides';
 import { advancedSlides } from './slides/advancedSlides';
 
 // Aggregazione di tutte le slide in un unico array
+// NUOVA ORGANIZZAZIONE: Introduzione generale → Teoria → Simmetrica → Asimmetrica → Pratica → Avanzato
 export const slides: Slide[] = [
-  ...introSlides,       // ID 1-5
-  ...theorySlides,      // ID 6
-  ...symmetricSlides,   // ID 7-16 (Crittografia Simmetrica: DES, 3DES, AES)
-  ...asymmetricSlides,  // ID 17-21 (RSA)
-  ...opensslSlides,     // ID 22-36 (OpenSSL - PRIMARY)
-  ...practiceSlides,    // ID 37-56 (PowerShell - SECONDARY)
-  ...advancedSlides,    // ID 57-61
+  ...introSlides,       // ID 1-5 (Introduzione generale alla crittografia e confronto)
+  ...theorySlides,      // ID 6-11 (Crittografia Asimmetrica, RSA, Matematica)
+  ...symmetricSlides,   // ID 12-21 (Crittografia Simmetrica: DES, 3DES, AES)
+  ...asymmetricSlides,  // ID 22-26 (RSA: I 5 Passi, Esempi Numerici)
+  ...opensslSlides,     // ID 27-41 (OpenSSL - PRIMARY - Cross-platform)
+  ...practiceSlides,    // ID 42-61 (PowerShell - SECONDARY - Windows)
+  ...advancedSlides,    // ID 62-66 (Sicurezza, Limitazioni, Applicazioni)
 ];
 
 // Funzione CRITICA per mapping corretto ID → posizione array

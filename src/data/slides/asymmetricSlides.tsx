@@ -3,7 +3,7 @@ import type { Slide } from '../../types';
 export const asymmetricSlides: Slide[] = [
   // Slide 7: Generazione Chiavi Passo 1-2
   {
-    id: 17,
+    id: 22,
     title: 'Generazione Chiavi RSA - Parte 1',
     category: 'asymmetric',
     content: () => (
@@ -50,7 +50,7 @@ export const asymmetricSlides: Slide[] = [
 
   // Slide 8: Generazione Chiavi Passo 3-5
   {
-    id: 18,
+    id: 23,
     title: 'Generazione Chiavi RSA - Parte 2',
     category: 'asymmetric',
     content: () => (
@@ -99,7 +99,7 @@ export const asymmetricSlides: Slide[] = [
 
   // Slide 9: Chiavi Finali
   {
-    id: 19,
+    id: 24,
     title: 'Chiavi RSA Generate',
     category: 'asymmetric',
     content: () => (
@@ -156,7 +156,7 @@ export const asymmetricSlides: Slide[] = [
 
   // Slide 10: Formule Cifratura/Decifratura
   {
-    id: 20,
+    id: 25,
     title: 'Cifratura e Decifratura',
     category: 'asymmetric',
     content: () => (
@@ -199,7 +199,7 @@ export const asymmetricSlides: Slide[] = [
 
   // Slide 11: Esempio Numerico
   {
-    id: 21,
+    id: 26,
     title: 'Esempio Pratico Completo',
     category: 'asymmetric',
     content: () => (
