@@ -87,50 +87,68 @@ export function SlideViewer({ initialSlideIndex = 0, onGoHome }: SlideViewerProp
           </div>
 
           {/* Navigation */}
-          <div className="mt-8 pt-6 border-t-2 border-gray-600 flex items-center justify-between">
-            {/* Previous Button */}
-            <button
-              onClick={goPrevious}
-              disabled={currentIndex === 0}
-              className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 disabled:bg-gray-800/50 disabled:cursor-not-allowed text-gray-200 px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-105 disabled:hover:scale-100"
-            >
-              <ChevronLeft className="w-5 h-5" />
-              Indietro
-            </button>
-
-            {/* Slide Indicators */}
-            <div className="flex items-center gap-3">
-              {/* Dots */}
-              <div className="hidden md:flex gap-2">
-                {slides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => goToSlide(index)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                      index === currentIndex
-                        ? 'bg-blue-400 scale-150'
-                        : 'bg-gray-600 hover:bg-gray-500'
-                    }`}
-                    title={`Slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-
-              {/* Counter */}
-              <span className="text-gray-400 font-medium ml-4">
-                {currentIndex + 1} / {slides.length}
-              </span>
+          <div className="mt-8 pt-6 border-t-2 border-gray-600 grid grid-cols-3 gap-4 items-center">
+            {/* Previous Button - Left */}
+            <div className="flex justify-start">
+              <button
+                onClick={goPrevious}
+                disabled={currentIndex === 0}
+                className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 disabled:bg-gray-800/50 disabled:cursor-not-allowed text-gray-200 px-4 py-2 md:px-6 md:py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-105 disabled:hover:scale-100"
+              >
+                <ChevronLeft className="w-5 h-5" />
+                <span className="hidden md:inline">Indietro</span>
+              </button>
             </div>
 
-            {/* Next Button */}
-            <button
-              onClick={goNext}
-              disabled={currentIndex === slides.length - 1}
-              className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 disabled:bg-gray-800/50 disabled:cursor-not-allowed text-gray-200 px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-105 disabled:hover:scale-100"
-            >
-              Avanti
-              <ChevronRight className="w-5 h-5" />
-            </button>
+            {/* Slide Indicators - Center */}
+            <div className="flex flex-col items-center gap-2">
+              {/* Counter */}
+              <span className="text-gray-400 font-medium text-sm md:text-base">
+                {currentIndex + 1} / {slides.length}
+              </span>
+
+              {/* Compact Dots - show only nearby slides */}
+              <div className="flex gap-1">
+                {slides.map((_, index) => {
+                  // Show only slides within range of current slide
+                  const distance = Math.abs(index - currentIndex);
+                  const isVisible = distance <= 3 || index === 0 || index === slides.length - 1;
+
+                  if (!isVisible) {
+                    // Show ellipsis for gaps
+                    if (index === currentIndex - 4 || index === currentIndex + 4) {
+                      return <span key={index} className="text-gray-600 text-xs">...</span>;
+                    }
+                    return null;
+                  }
+
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => goToSlide(index)}
+                      className={`rounded-full transition-all duration-300 ${
+                        index === currentIndex
+                          ? 'bg-blue-400 w-2 h-2'
+                          : 'bg-gray-600 hover:bg-gray-500 w-1.5 h-1.5'
+                      }`}
+                      title={`Slide ${index + 1}`}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Next Button - Right */}
+            <div className="flex justify-end">
+              <button
+                onClick={goNext}
+                disabled={currentIndex === slides.length - 1}
+                className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 disabled:bg-gray-800/50 disabled:cursor-not-allowed text-gray-200 px-4 py-2 md:px-6 md:py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-105 disabled:hover:scale-100"
+              >
+                <span className="hidden md:inline">Avanti</span>
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
