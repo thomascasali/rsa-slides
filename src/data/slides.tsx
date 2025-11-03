@@ -8,12 +8,12 @@ import { practiceSlides } from './slides/practiceSlides';
 import { advancedSlides } from './slides/advancedSlides';
 
 // Aggregazione di tutte le slide in un unico array
-// NUOVA ORGANIZZAZIONE: Introduzione generale → Teoria → Simmetrica → Asimmetrica → Pratica → Avanzato
+// ORGANIZZAZIONE DIDATTICA: Introduzione → Simmetrica (più semplice) → Asimmetrica (più complessa) → Pratica → Avanzato
 export const slides: Slide[] = [
   ...introSlides,       // ID 1-5 (Introduzione generale alla crittografia e confronto)
-  ...theorySlides,      // ID 6-11 (Crittografia Asimmetrica, RSA, Matematica)
-  ...symmetricSlides,   // ID 12-21 (Crittografia Simmetrica: DES, 3DES, AES)
-  ...asymmetricSlides,  // ID 22-26 (RSA: I 5 Passi, Esempi Numerici)
+  ...symmetricSlides,   // ID 6-15 (Crittografia Simmetrica: DES, 3DES, AES - Prima perché più semplice)
+  ...theorySlides,      // ID 16-21 (Crittografia Asimmetrica: teoria, Alice/Bob, algoritmi, RSA intro, matematica)
+  ...asymmetricSlides,  // ID 22-26 (RSA: I 5 Passi, Esempi Numerici Dettagliati)
   ...opensslSlides,     // ID 27-41 (OpenSSL - PRIMARY - Cross-platform)
   ...practiceSlides,    // ID 42-61 (PowerShell - SECONDARY - Windows)
   ...advancedSlides,    // ID 62-66 (Sicurezza, Limitazioni, Applicazioni)

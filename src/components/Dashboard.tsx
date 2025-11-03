@@ -8,7 +8,7 @@ interface DashboardProps {
 export function Dashboard({ onGoToSlide }: DashboardProps) {
   const stats = getSlideStats();
 
-  // Quick-start cards con ID precisi (aggiornati dopo riorganizzazione)
+  // Quick-start cards con ID precisi (riorganizzati: Simmetrica prima, poi Asimmetrica)
   const quickStartCards = [
     {
       id: 1,
@@ -19,7 +19,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'intro',
     },
     {
-      id: 12,
+      id: 6,
       title: 'Crittografia Simmetrica',
       description: 'DES, 3DES, AES e Confronti Prestazionali',
       icon: Key,

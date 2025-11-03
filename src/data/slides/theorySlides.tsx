@@ -3,7 +3,7 @@ import type { Slide } from '../../types';
 export const theorySlides: Slide[] = [
   // Slide 6: Intro alla Crittografia Asimmetrica
   {
-    id: 6,
+    id: 16,
     title: 'La Crittografia Asimmetrica',
     category: 'theory',
     content: () => (
@@ -45,7 +45,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 7: Scambio Chiavi
   {
-    id: 7,
+    id: 17,
     title: 'Come Funziona lo Scambio',
     category: 'theory',
     content: () => (
@@ -94,7 +94,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 8: Comunicazione Sicura
   {
-    id: 8,
+    id: 18,
     title: 'Comunicazione Sicura con Crittografia Asimmetrica',
     category: 'theory',
     content: () => (
@@ -143,7 +143,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 9: Gli Algoritmi Asimmetrici
   {
-    id: 9,
+    id: 19,
     title: 'Algoritmi di Crittografia Asimmetrica',
     category: 'theory',
     content: () => (
@@ -209,7 +209,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 10: Cos'è RSA
   {
-    id: 10,
+    id: 20,
     title: "L'Algoritmo RSA",
     category: 'theory',
     content: () => (
@@ -263,7 +263,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 11: Base Matematica
   {
-    id: 11,
+    id: 21,
     title: 'La Matematica di RSA - Prerequisiti',
     category: 'theory',
     content: () => (
