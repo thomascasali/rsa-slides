@@ -1,4 +1,4 @@
-import { Lock, Book, Code, Zap, Shield, ArrowRight } from 'lucide-react';
+import { Lock, Book, Code, Zap, Shield, ArrowRight, Terminal } from 'lucide-react';
 import { getSlideStats, getSlidePosition } from '../data/slides';
 
 interface DashboardProps {
@@ -28,14 +28,22 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
     },
     {
       id: 12,
-      title: 'Progetti Pratici',
-      description: 'Esercitazioni PowerShell con Alice e Bob',
+      title: 'Pratica OpenSSL',
+      description: 'Esercitazioni Cross-Platform con OpenSSL',
+      icon: Terminal,
+      color: 'teal',
+      category: 'openssl',
+    },
+    {
+      id: 27,
+      title: 'Pratica PowerShell',
+      description: 'Esercitazioni Windows con Alice e Bob',
       icon: Code,
       color: 'orange',
       category: 'practice',
     },
     {
-      id: 32,
+      id: 47,
       title: 'Argomenti Avanzati',
       description: 'Sicurezza, Limitazioni e Applicazioni Reali',
       icon: Shield,
@@ -61,6 +69,12 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       border: 'border-purple-700',
       text: 'text-purple-300',
       hover: 'hover:border-purple-500',
+    },
+    teal: {
+      bg: 'bg-gradient-to-br from-teal-900/50 to-teal-800/50',
+      border: 'border-teal-700',
+      text: 'text-teal-300',
+      hover: 'hover:border-teal-500',
     },
     orange: {
       bg: 'bg-gradient-to-br from-orange-900/50 to-orange-800/50',
@@ -98,7 +112,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Statistiche */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-12">
           <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/30 border border-blue-700 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold text-blue-300">{stats.total}</div>
             <div className="text-gray-400 mt-2">Slide Totali</div>
@@ -111,9 +125,13 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
             <div className="text-4xl font-bold text-purple-300">{stats.byCategory.asymmetric + stats.byCategory.theory}</div>
             <div className="text-gray-400 mt-2">Teoria</div>
           </div>
+          <div className="bg-gradient-to-br from-teal-900/30 to-teal-800/30 border border-teal-700 rounded-lg p-6 text-center">
+            <div className="text-4xl font-bold text-teal-300">{stats.byCategory.openssl}</div>
+            <div className="text-gray-400 mt-2">OpenSSL</div>
+          </div>
           <div className="bg-gradient-to-br from-orange-900/30 to-orange-800/30 border border-orange-700 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold text-orange-300">{stats.byCategory.practice}</div>
-            <div className="text-gray-400 mt-2">Pratica</div>
+            <div className="text-gray-400 mt-2">PowerShell</div>
           </div>
           <div className="bg-gradient-to-br from-red-900/30 to-red-800/30 border border-red-700 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold text-red-300">{stats.byCategory.advanced}</div>
@@ -178,10 +196,20 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
               </ul>
             </div>
             <div>
-              <h3 className="text-xl font-bold text-orange-300 mb-4">⚡ Pratica</h3>
+              <h3 className="text-xl font-bold text-teal-300 mb-4">🔧 Pratica OpenSSL</h3>
               <ul className="space-y-2 text-gray-300">
-                <li>• Setup Ambiente PowerShell</li>
-                <li>• Generazione Chiavi RSA (Alice & Bob)</li>
+                <li>• Installazione Cross-Platform (Win/Linux/Mac)</li>
+                <li>• Generazione Chiavi RSA con openssl</li>
+                <li>• Encryption/Decryption con RSA</li>
+                <li>• Firme Digitali e Certificati X.509</li>
+                <li>• Cifratura Ibrida (RSA + AES)</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-orange-300 mb-4">⚡ Pratica PowerShell</h3>
+              <ul className="space-y-2 text-gray-300">
+                <li>• Setup Ambiente Windows</li>
+                <li>• Generazione Chiavi con .NET APIs</li>
                 <li>• Cifratura e Decifratura Messaggi</li>
                 <li>• Firme Digitali e Verifica</li>
                 <li>• Test di Sicurezza e Manomissione</li>

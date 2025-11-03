@@ -2,6 +2,7 @@ import type { Slide } from '../types';
 import { introSlides } from './slides/introSlides';
 import { theorySlides } from './slides/theorySlides';
 import { asymmetricSlides } from './slides/asymmetricSlides';
+import { opensslSlides } from './slides/opensslSlides';
 import { practiceSlides } from './slides/practiceSlides';
 import { advancedSlides } from './slides/advancedSlides';
 
@@ -10,8 +11,9 @@ export const slides: Slide[] = [
   ...introSlides,       // ID 1-5
   ...theorySlides,      // ID 6
   ...asymmetricSlides,  // ID 7-11
-  ...practiceSlides,    // ID 12-31
-  ...advancedSlides,    // ID 32-36
+  ...opensslSlides,     // ID 12-26 (OpenSSL - PRIMARY)
+  ...practiceSlides,    // ID 27-46 (PowerShell - SECONDARY)
+  ...advancedSlides,    // ID 47-51
 ];
 
 // Funzione CRITICA per mapping corretto ID → posizione array
@@ -38,6 +40,7 @@ export const getSlideStats = () => {
       intro: slides.filter(s => s.category === 'intro').length,
       theory: slides.filter(s => s.category === 'theory').length,
       asymmetric: slides.filter(s => s.category === 'asymmetric').length,
+      openssl: slides.filter(s => s.category === 'openssl').length,
       practice: slides.filter(s => s.category === 'practice').length,
       advanced: slides.filter(s => s.category === 'advanced').length,
     },
