@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercitazione Pratica RSA - PowerShell</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .presentation {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1100px;
+            width: 100%;
+            min-height: 650px;
+            padding: 3rem;
+            position: relative;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 1.8rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 1.3rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .code-comment {
+            color: #6a9955;
+        }
+
+        .code-keyword {
+            color: #569cd6;
+        }
+
+        .code-string {
+            color: #ce9178;
+        }
+
+        .code-function {
+            color: #dcdcaa;
+        }
+
+        .prompt {
+            color: #4ec9b0;
+            user-select: none;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .copy-button:hover {
+            background: #764ba2;
+        }
+
+        .copy-button.copied {
+            background: #28a745;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .danger-box {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .step-box {
+            background: #f0f4ff;
+            border: 2px solid #667eea;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .terminal-output {
+            background: #0c0c0c;
+            color: #cccccc;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            border: 2px solid #555;
+        }
+
+        .output-success {
+            color: #4ec9b0;
+        }
+
+        .output-error {
+            color: #f48771;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 2rem;
+            left: 3rem;
+            right: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .nav-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-button:hover:not(:disabled) {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .slide-indicator {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: #667eea;
+            transform: scale(1.3);
+        }
+
+        .slide-number {
+            color: #999;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        .content-area {
+            max-height: calc(100vh - 300px);
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+
+        .content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .home-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .home-button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .user-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            margin: 0.3rem;
+        }
+
+        .alice-badge {
+            background: #e3f2fd;
+            color: #1976d2;
+            border: 2px solid #1976d2;
+        }
+
+        .bob-badge {
+            background: #f3e5f5;
+            color: #7b1fa2;
+            border: 2px solid #7b1fa2;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 2rem 1.5rem;
+                min-height: 500px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .navigation {
+                left: 1.5rem;
+                right: 1.5rem;
+            }
+
+            .code-block {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Componente per copiare il codice
+        function CodeBlock({ children, language = "powershell" }) {
+            const [copied, setCopied] = useState(false);
+
+            const handleCopy = () => {
+                // Rimuovi i prompt prima di copiare
+                const text = children.replace(/PS .*?> /g, '').replace(/# .*/g, '');
+                navigator.clipboard.writeText(text.trim());
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            };
+
+            return (
+                <div className="code-block">
+                    <button 
+                        className={`copy-button ${copied ? 'copied' : ''}`}
+                        onClick={handleCopy}
+                    >
+                        {copied ? '✓ Copiato!' : '📋 Copia'}
+                    </button>
+                    <pre style={{margin: 0}}>{children}</pre>
+                </div>
+            );
+        }
+
+        const slidesData = [
+            // Slide 0: Titolo
+            {
+                title: "Esercitazione Pratica RSA",
+                content: () => (
+                    <div style={{textAlign: 'center', paddingTop: '3rem'}}>
+                        <div style={{fontSize: '4rem', marginBottom: '2rem'}}>⚡</div>
+                        <h1 style={{fontSize: '3.5rem', marginBottom: '1rem', border: 'none'}}>
+                            Esercitazione Pratica
+                        </h1>
+                        <h2 style={{fontSize: '2rem', color: '#666', fontWeight: 'normal'}}>
+                            RSA con PowerShell
+                        </h2>
+                        <p style={{fontSize: '1.3rem', marginTop: '3rem', color: '#666'}}>
+                            Simulazione di scambio messaggi cifrati tra<br/>
+                            <span className="alice-badge">👩‍💼 Alice</span> e <span className="bob-badge">👨‍💼 Bob</span>
+                        </p>
+                        <div style={{marginTop: '4rem', fontSize: '1rem', color: '#999'}}>
+                            Prof. Thomas Casali - ITTS<br/>
+                            Sistemi e Reti - Classe Quinta
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 1: Preparazione
+            {
+                title: "Preparazione dell'Ambiente",
+                content: () => (
+                    <div>
+                        <h3>🛠️ Setup Iniziale</h3>
+                        
+                        <div className="warning-box">
+                            <strong>⚠️ Requisiti:</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>Windows 10/11</li>
+                                <li>PowerShell 5.1 o superiore</li>
+                                <li>.NET Framework (già incluso in Windows)</li>
+                                <li>Permessi di esecuzione script</li>
+                            </ul>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span>Verifica versione PowerShell</h3>
+                            <p>Apri PowerShell e verifica la versione:</p>
+                            <CodeBlock>
+{`PS C:\\> $PSVersionTable.PSVersion
+
+Major  Minor  Build  Revision
+-----  -----  -----  --------
+5      1      19041  4648`}
+                            </CodeBlock>
+                            <div className="success-box">
+                                ✅ Se vedi versione 5.1 o superiore, sei pronto!
+                            </div>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">2</span>Configura esecuzione script</h3>
+                            <p>Permetti l'esecuzione di script locali:</p>
+                            <CodeBlock>
+{`PS C:\\> Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`}
+                            </CodeBlock>
+                            <div className="info-box">
+                                📌 Questo comando permette di eseguire script creati localmente
+                            </div>
+                        </div>
+
+                        <div className="info-box">
+                            <strong>💡 Cosa faremo:</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                Apriremo <strong>2 finestre PowerShell separate</strong>:<br/>
+                                • Una per <span className="alice-badge">Alice</span><br/>
+                                • Una per <span className="bob-badge">Bob</span>
+                            </p>
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 2: Creazione cartelle
+            {
+                title: "STEP 1: Creazione Struttura",
+                content: () => (
+                    <div>
+                        <h3>📁 Creiamo le cartelle di lavoro</h3>
+                        
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span>Apri la prima finestra PowerShell</h3>
+                            <p>Questa sarà la nostra finestra principale</p>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">2</span>Crea la cartella principale e sottocartelle</h3>
+                            <CodeBlock>
+{`# Crea cartella principale
+PS C:\\> New-Item -Path "C:\\RSA_Lab" -ItemType Directory
+
+# Crea cartelle per Alice e Bob
+PS C:\\> New-Item -Path "C:\\RSA_Lab\\Alice" -ItemType Directory
+PS C:\\> New-Item -Path "C:\\RSA_Lab\\Bob" -ItemType Directory
+
+# Visualizza la struttura
+PS C:\\> tree C:\\RSA_Lab /F`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="terminal-output">
+{`Folder PATH listing
+C:\\RSA_LAB
+├───Alice
+└───Bob`}
+                        </div>
+
+                        <div className="success-box">
+                            <strong>✅ Ottimo!</strong> La struttura è pronta.<br/>
+                            Ora abbiamo una cartella separata per ogni utente.
+                        </div>
+
+                        <div className="info-box">
+                            <strong>📂 Cosa rappresentano:</strong><br/>
+                            • <strong>Alice/</strong> - Conterrà le chiavi e i file di Alice<br/>
+                            • <strong>Bob/</strong> - Conterrà le chiavi e i file di Bob
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 3: Setup terminali
+            {
+                title: "STEP 2: Preparazione Terminali",
+                content: () => (
+                    <div>
+                        <h3>🖥️ Configuriamo i due terminali</h3>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span>Finestra PowerShell per <span className="alice-badge">Alice</span></h3>
+                            <p>Apri una nuova finestra PowerShell e posizionati nella cartella di Alice:</p>
+                            <CodeBlock>
+{`PS C:\\> cd C:\\RSA_Lab\\Alice
+PS C:\\RSA_Lab\\Alice>`}
+                            </CodeBlock>
+                            <div className="info-box">
+                                💡 <strong>Suggerimento:</strong> Rinomina la finestra in "ALICE" nella barra del titolo 
+                                per non confonderti
+                            </div>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">2</span>Finestra PowerShell per <span className="bob-badge">Bob</span></h3>
+                            <p>Apri un'altra finestra PowerShell e posizionati nella cartella di Bob:</p>
+                            <CodeBlock>
+{`PS C:\\> cd C:\\RSA_Lab\\Bob
+PS C:\\RSA_Lab\\Bob>`}
+                            </CodeBlock>
+                            <div className="info-box">
+                                💡 <strong>Suggerimento:</strong> Rinomina questa finestra in "BOB"
+                            </div>
+                        </div>
+
+                        <div className="warning-box">
+                            <strong>⚠️ IMPORTANTE:</strong> Da questo punto in avanti, presta attenzione a quale 
+                            terminale usare per ogni comando. Ogni comando avrà l'indicazione:
+                            <div style={{marginTop: '0.5rem'}}>
+                                <span className="alice-badge">👩‍💼 ALICE</span> = Esegui nel terminale di Alice<br/>
+                                <span className="bob-badge">👨‍💼 BOB</span> = Esegui nel terminale di Bob
+                            </div>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>✅ Setup completato!</strong><br/>
+                            Ora hai due terminali pronti: uno per Alice e uno per Bob.
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 4: Generazione chiavi Alice
+            {
+                title: "STEP 3: Generazione Chiavi Alice",
+                content: () => (
+                    <div>
+                        <h3><span className="alice-badge">👩‍💼 ALICE</span> - Genera le sue chiavi</h3>
+                        
+                        <div className="info-box">
+                            <strong>📌 Nel terminale di Alice</strong> (C:\\RSA_Lab\\Alice)
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span>Crea un oggetto RSA e genera le chiavi</h3>
+                            <CodeBlock>
+{`# Crea l'oggetto RSA con chiavi da 2048 bit
+PS C:\\RSA_Lab\\Alice> $AliceRSA = [System.Security.Cryptography.RSACryptoServiceProvider]::new(2048)
+
+# Visualizza info chiave
+PS C:\\RSA_Lab\\Alice> $AliceRSA.KeySize`}
+                            </CodeBlock>
+                            <div className="terminal-output">
+                                <span className="output-success">2048</span>
+                            </div>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">2</span>Esporta la chiave PUBBLICA</h3>
+                            <CodeBlock>
+{`# Esporta chiave pubblica in formato XML
+PS C:\\RSA_Lab\\Alice> $AliceRSA.ToXmlString($false) | Out-File "alice_public.xml"
+
+# Visualizza il contenuto
+PS C:\\RSA_Lab\\Alice> Get-Content "alice_public.xml"`}
+                            </CodeBlock>
+                            <div className="terminal-output">
+{`<RSAKeyValue>
+  <Modulus>xA3f7H8k2J...</Modulus>
+  <Exponent>AQAB</Exponent>
+</RSAKeyValue>`}
+                            </div>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">3</span>Esporta la chiave PRIVATA</h3>
+                            <CodeBlock>
+{`# Esporta chiave privata (con parametro $true)
+PS C:\\RSA_Lab\\Alice> $AliceRSA.ToXmlString($true) | Out-File "alice_private.xml"
+
+# Verifica che esista
+PS C:\\RSA_Lab\\Alice> dir *.xml`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>✅ Alice ha generato le sue chiavi!</strong><br/>
+                            • <strong>alice_public.xml</strong> - Da condividere con Bob<br/>
+                            • <strong>alice_private.xml</strong> - Da mantenere SEGRETA
+                        </div>
+
+                        <div className="danger-box">
+                            <strong>🔒 SICUREZZA:</strong> La chiave privata NON deve mai essere condivisa!
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 5: Generazione chiavi Bob
+            {
+                title: "STEP 4: Generazione Chiavi Bob",
+                content: () => (
+                    <div>
+                        <h3><span className="bob-badge">👨‍💼 BOB</span> - Genera le sue chiavi</h3>
+                        
+                        <div className="info-box">
+                            <strong>📌 Nel terminale di Bob</strong> (C:\\RSA_Lab\\Bob)
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span>Crea oggetto RSA per Bob</h3>
+                            <CodeBlock>
+{`# Crea l'oggetto RSA per Bob
+PS C:\\RSA_Lab\\Bob> $BobRSA = [System.Security.Cryptography.RSACryptoServiceProvider]::new(2048)
+
+# Verifica
+PS C:\\RSA_Lab\\Bob> $BobRSA.KeySize`}
+                            </CodeBlock>
+                            <div className="terminal-output">
+                                <span className="output-success">2048</span>
+                            </div>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">2</span>Esporta chiave pubblica di Bob</h3>
+                            <CodeBlock>
+{`# Esporta chiave pubblica
+PS C:\\RSA_Lab\\Bob> $BobRSA.ToXmlString($false) | Out-File "bob_public.xml"
+
+# Visualizza
+PS C:\\RSA_Lab\\Bob> Get-Content "bob_public.xml"`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">3</span>Esporta chiave privata di Bob</h3>
+                            <CodeBlock>
+{`# Esporta chiave privata
+PS C:\\RSA_Lab\\Bob> $BobRSA.ToXmlString($true) | Out-File "bob_private.xml"
+
+# Lista file
+PS C:\\RSA_Lab\\Bob> dir *.xml`}
+                            </CodeBlock>
+                            <div className="terminal-output">
+{`Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---          03/11/2025    10:30            596 bob_private.xml
+-a---          03/11/2025    10:30            272 bob_public.xml`}
+                            </div>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>✅ Bob ha generato le sue chiavi!</strong><br/>
+                            Ora sia Alice che Bob hanno le loro coppie di chiavi.
+                        </div>
+
+                        <div className="info-box">
+                            <strong>💡 Recap:</strong><br/>
+                            • Alice ha: alice_public.xml + alice_private.xml<br/>
+                            • Bob ha: bob_public.xml + bob_private.xml
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 6: Scambio chiavi pubbliche
+            {
+                title: "STEP 5: Scambio Chiavi Pubbliche",
+                content: () => (
+                    <div>
+                        <h3>🔄 Alice e Bob si scambiano le chiavi PUBBLICHE</h3>
+
+                        <div className="info-box">
+                            <strong>💡 Cosa stiamo facendo:</strong><br/>
+                            Le chiavi pubbliche possono essere condivise liberamente. 
+                            Simuliamo lo scambio copiando i file tra le cartelle.
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span>Alice copia la sua chiave pubblica a Bob</h3>
+                            <p>In un terminale qualsiasi:</p>
+                            <CodeBlock>
+{`# Alice condivide la sua chiave pubblica con Bob
+PS C:\\RSA_Lab> Copy-Item "Alice\\alice_public.xml" -Destination "Bob\\alice_public.xml"`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">2</span>Bob copia la sua chiave pubblica ad Alice</h3>
+                            <CodeBlock>
+{`# Bob condivide la sua chiave pubblica con Alice
+PS C:\\RSA_Lab> Copy-Item "Bob\\bob_public.xml" -Destination "Alice\\bob_public.xml"`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">3</span>Verifica che entrambi abbiano le chiavi</h3>
+                            <CodeBlock>
+{`# Verifica cartella di Alice
+PS C:\\RSA_Lab> dir Alice\\*.xml
+
+# Verifica cartella di Bob
+PS C:\\RSA_Lab> dir Bob\\*.xml`}
+                            </CodeBlock>
+                            <div className="terminal-output">
+{`# Alice dovrebbe avere:
+alice_public.xml, alice_private.xml, bob_public.xml
+
+# Bob dovrebbe avere:
+bob_public.xml, bob_private.xml, alice_public.xml`}
+                            </div>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>✅ Scambio completato!</strong><br/>
+                            Ora Alice ha la chiave pubblica di Bob e viceversa.
+                        </div>
+
+                        <div className="warning-box">
+                            <strong>🔐 Nota Importante:</strong> Le chiavi PRIVATE rimangono nelle rispettive cartelle 
+                            e NON vengono mai condivise!
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 7: Alice cifra per Bob
+            {
+                title: "STEP 6: Alice Invia Messaggio a Bob",
+                content: () => (
+                    <div>
+                        <h3><span className="alice-badge">👩‍💼 ALICE</span> - Cifra un messaggio per Bob</h3>
+                        
+                        <div className="info-box">
+                            <strong>Scenario:</strong> Alice vuole inviare il messaggio "Ciao Bob!" in modo sicuro.
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span>Alice carica la chiave PUBBLICA di Bob</h3>
+                            <CodeBlock>
+{`# Nel terminale di Alice
+PS C:\\RSA_Lab\\Alice> $BobPublicKey = Get-Content "bob_public.xml" -Raw
+
+# Crea un nuovo oggetto RSA per cifrare
+PS C:\\RSA_Lab\\Alice> $RSAEncrypt = [System.Security.Cryptography.RSACryptoServiceProvider]::new()
+
+# Carica la chiave pubblica di Bob
+PS C:\\RSA_Lab\\Alice> $RSAEncrypt.FromXmlString($BobPublicKey)`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">2</span>Cifra il messaggio</h3>
+                            <CodeBlock>
+{`# Messaggio da cifrare
+PS C:\\RSA_Lab\\Alice> $messaggio = "Ciao Bob!"
+
+# Converti in bytes
+PS C:\\RSA_Lab\\Alice> $bytes = [System.Text.Encoding]::UTF8.GetBytes($messaggio)
+
+# Cifra con la chiave pubblica di Bob
+PS C:\\RSA_Lab\\Alice> $cifrato = $RSAEncrypt.Encrypt($bytes, $false)
+
+# Converti in Base64 per visualizzarlo/salvarlo
+PS C:\\RSA_Lab\\Alice> $citratoBase64 = [Convert]::ToBase64String($cifrato)
+
+# Visualizza
+PS C:\\RSA_Lab\\Alice> $citratoBase64`}
+                            </CodeBlock>
+                            <div className="terminal-output">
+{`kJ8vF2xN3p9mQ7z... (lunga stringa Base64)`}
+                            </div>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">3</span>Salva il messaggio cifrato</h3>
+                            <CodeBlock>
+{`# Salva in un file
+PS C:\\RSA_Lab\\Alice> $citratoBase64 | Out-File "messaggio_per_bob.txt"
+
+# Alice "invia" il file a Bob (lo copia)
+PS C:\\RSA_Lab\\Alice> Copy-Item "messaggio_per_bob.txt" -Destination "..\\Bob\\"`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>📤 Messaggio inviato!</strong><br/>
+                            Alice ha cifrato "Ciao Bob!" e lo ha inviato. Anche se qualcuno lo intercetta, 
+                            non può leggerlo senza la chiave privata di Bob.
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 8: Bob decifra
+            {
+                title: "STEP 7: Bob Decifra il Messaggio",
+                content: () => (
+                    <div>
+                        <h3><span className="bob-badge">👨‍💼 BOB</span> - Decifra il messaggio di Alice</h3>
+                        
+                        <div className="info-box">
+                            <strong>📥 Bob ha ricevuto:</strong> messaggio_per_bob.txt (cifrato)
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span>Bob carica il messaggio cifrato</h3>
+                            <CodeBlock>
+{`# Nel terminale di Bob
+PS C:\\RSA_Lab\\Bob> $citratoBase64 = Get-Content "messaggio_per_bob.txt" -Raw
+
+# Converti da Base64 a bytes
+PS C:\\RSA_Lab\\Bob> $cifrato = [Convert]::FromBase64String($citratoBase64)`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">2</span>Decifra con la sua chiave PRIVATA</h3>
+                            <CodeBlock>
+{`# Bob usa la sua chiave privata (già caricata in $BobRSA)
+PS C:\\RSA_Lab\\Bob> $decifrato = $BobRSA.Decrypt($cifrato, $false)
+
+# Converti bytes in testo
+PS C:\\RSA_Lab\\Bob> $messaggioOriginale = [System.Text.Encoding]::UTF8.GetString($decifrato)
+
+# Visualizza il messaggio
+PS C:\\RSA_Lab\\Bob> $messaggioOriginale`}
+                            </CodeBlock>
+                            <div className="terminal-output">
+                                <span className="output-success">Ciao Bob!</span>
+                            </div>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>🎉 Successo!</strong><br/>
+                            Bob ha decifrato correttamente il messaggio di Alice: <strong>"Ciao Bob!"</strong>
+                        </div>
+
+                        <div className="info-box">
+                            <strong>💡 Cosa è successo:</strong><br/>
+                            1. Alice ha cifrato con la chiave PUBBLICA di Bob<br/>
+                            2. Solo Bob, con la sua chiave PRIVATA, può decifrare<br/>
+                            3. La comunicazione è sicura!
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 9: Bob risponde
+            {
+                title: "STEP 8: Bob Risponde ad Alice",
+                content: () => (
+                    <div>
+                        <h3><span className="bob-badge">👨‍💼 BOB</span> - Invia una risposta ad Alice</h3>
+                        
+                        <div className="info-box">
+                            <strong>Scenario:</strong> Bob vuole rispondere "Ciao Alice! Come stai?" ad Alice
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span>Bob carica la chiave PUBBLICA di Alice</h3>
+                            <CodeBlock>
+{`# Nel terminale di Bob
+PS C:\\RSA_Lab\\Bob> $AlicePublicKey = Get-Content "alice_public.xml" -Raw
+
+# Crea oggetto per cifrare
+PS C:\\RSA_Lab\\Bob> $RSAEncrypt = [System.Security.Cryptography.RSACryptoServiceProvider]::new()
+PS C:\\RSA_Lab\\Bob> $RSAEncrypt.FromXmlString($AlicePublicKey)`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">2</span>Cifra la risposta</h3>
+                            <CodeBlock>
+{`# Messaggio di Bob
+PS C:\\RSA_Lab\\Bob> $risposta = "Ciao Alice! Come stai?"
+PS C:\\RSA_Lab\\Bob> $bytes = [System.Text.Encoding]::UTF8.GetBytes($risposta)
+PS C:\\RSA_Lab\\Bob> $cifrato = $RSAEncrypt.Encrypt($bytes, $false)
+PS C:\\RSA_Lab\\Bob> $citratoBase64 = [Convert]::ToBase64String($cifrato)
+
+# Salva e invia ad Alice
+PS C:\\RSA_Lab\\Bob> $citratoBase64 | Out-File "risposta_per_alice.txt"
+PS C:\\RSA_Lab\\Bob> Copy-Item "risposta_per_alice.txt" -Destination "..\\Alice\\"`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">3</span><span className="alice-badge">Alice</span> decifra la risposta</h3>
+                            <CodeBlock>
+{`# Nel terminale di Alice
+PS C:\\RSA_Lab\\Alice> $citratoBase64 = Get-Content "risposta_per_alice.txt" -Raw
+PS C:\\RSA_Lab\\Alice> $cifrato = [Convert]::FromBase64String($citratoBase64)
+PS C:\\RSA_Lab\\Alice> $decifrato = $AliceRSA.Decrypt($cifrato, $false)
+PS C:\\RSA_Lab\\Alice> $messaggio = [System.Text.Encoding]::UTF8.GetString($decifrato)
+PS C:\\RSA_Lab\\Alice> $messaggio`}
+                            </CodeBlock>
+                            <div className="terminal-output">
+                                <span className="output-success">Ciao Alice! Come stai?</span>
+                            </div>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>✅ Comunicazione bidirezionale completata!</strong><br/>
+                            Alice e Bob hanno scambiato messaggi cifrati in modo sicuro.
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 10: Firma Digitale Intro
+            {
+                title: "BONUS: Firma Digitale",
+                content: () => (
+                    <div>
+                        <h3>✍️ Cos'è una Firma Digitale?</h3>
+
+                        <div className="info-box">
+                            <p style={{fontSize: '1.1rem'}}>
+                                Una <strong>firma digitale</strong> garantisce:<br/>
+                                • <strong>Autenticità:</strong> Il messaggio proviene davvero dal mittente<br/>
+                                • <strong>Integrità:</strong> Il messaggio non è stato modificato<br/>
+                                • <strong>Non ripudio:</strong> Il mittente non può negare di averlo inviato
+                            </p>
+                        </div>
+
+                        <h3 style={{marginTop: '2rem'}}>Come funziona?</h3>
+
+                        <div className="step-box">
+                            <strong>1️⃣ Firma (con chiave PRIVATA):</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                Alice calcola l'hash del messaggio e lo cifra con la sua chiave PRIVATA. 
+                                Questo è la "firma".
+                            </p>
+                        </div>
+
+                        <div className="step-box">
+                            <strong>2️⃣ Verifica (con chiave PUBBLICA):</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                Bob riceve messaggio + firma. Decifra la firma con la chiave PUBBLICA di Alice, 
+                                calcola l'hash del messaggio ricevuto e confronta. Se combaciano, la firma è valida!
+                            </p>
+                        </div>
+
+                        <div className="warning-box">
+                            <strong>⚠️ Differenza chiave:</strong><br/>
+                            • <strong>Cifratura:</strong> Chiave PUBBLICA cifra, chiave PRIVATA decifra (segretezza)<br/>
+                            • <strong>Firma:</strong> Chiave PRIVATA firma, chiave PUBBLICA verifica (autenticità)
+                        </div>
+
+                        <div className="info-box">
+                            <strong>Prossime slide:</strong> Vediamo come implementare la firma digitale in PowerShell!
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 11: Firma - Alice firma
+            {
+                title: "STEP 9: Alice Firma un Messaggio",
+                content: () => (
+                    <div>
+                        <h3><span className="alice-badge">👩‍💼 ALICE</span> - Firma digitalmente un documento</h3>
+
+                        <div className="info-box">
+                            <strong>Scenario:</strong> Alice vuole firmare il messaggio "Contratto approvato" 
+                            per provare che proviene da lei.
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span>Prepara il messaggio</h3>
+                            <CodeBlock>
+{`# Nel terminale di Alice
+PS C:\\RSA_Lab\\Alice> $documento = "Contratto approvato"
+PS C:\\RSA_Lab\\Alice> $bytes = [System.Text.Encoding]::UTF8.GetBytes($documento)`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">2</span>Crea la firma con la chiave PRIVATA</h3>
+                            <CodeBlock>
+{`# Alice usa la sua chiave PRIVATA per firmare
+PS C:\\RSA_Lab\\Alice> $firma = $AliceRSA.SignData($bytes, [System.Security.Cryptography.HashAlgorithmName]::SHA256, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1)
+
+# Converti in Base64
+PS C:\\RSA_Lab\\Alice> $firmaBase64 = [Convert]::ToBase64String($firma)
+
+# Visualizza (parte della firma)
+PS C:\\RSA_Lab\\Alice> $firmaBase64.Substring(0,50)`}
+                            </CodeBlock>
+                            <div className="terminal-output">
+{`mK8pL3vN2... (stringa Base64 della firma)`}
+                            </div>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">3</span>Invia documento + firma a Bob</h3>
+                            <CodeBlock>
+{`# Salva documento e firma
+PS C:\\RSA_Lab\\Alice> $documento | Out-File "documento_firmato.txt"
+PS C:\\RSA_Lab\\Alice> $firmaBase64 | Out-File "firma.txt"
+
+# Invia a Bob
+PS C:\\RSA_Lab\\Alice> Copy-Item "documento_firmato.txt" -Destination "..\\Bob\\"
+PS C:\\RSA_Lab\\Alice> Copy-Item "firma.txt" -Destination "..\\Bob\\"`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>✅ Documento firmato!</strong><br/>
+                            Alice ha inviato il documento e la firma digitale a Bob.
+                        </div>
+
+                        <div className="info-box">
+                            <strong>💡 Nota:</strong> La firma è stata creata con la chiave PRIVATA di Alice. 
+                            Solo lei può creare questa firma.
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 12: Bob verifica firma
+            {
+                title: "STEP 10: Bob Verifica la Firma",
+                content: () => (
+                    <div>
+                        <h3><span className="bob-badge">👨‍💼 BOB</span> - Verifica che il documento provenga da Alice</h3>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span>Carica documento e firma</h3>
+                            <CodeBlock>
+{`# Nel terminale di Bob
+PS C:\\RSA_Lab\\Bob> $documento = Get-Content "documento_firmato.txt" -Raw
+PS C:\\RSA_Lab\\Bob> $firmaBase64 = Get-Content "firma.txt" -Raw
+
+# Converti firma da Base64
+PS C:\\RSA_Lab\\Bob> $firma = [Convert]::FromBase64String($firmaBase64)
+
+# Converti documento in bytes
+PS C:\\RSA_Lab\\Bob> $bytes = [System.Text.Encoding]::UTF8.GetBytes($documento.Trim())`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">2</span>Carica la chiave PUBBLICA di Alice</h3>
+                            <CodeBlock>
+{`# Carica chiave pubblica di Alice
+PS C:\\RSA_Lab\\Bob> $AlicePublicKey = Get-Content "alice_public.xml" -Raw
+
+# Crea oggetto per verifica
+PS C:\\RSA_Lab\\Bob> $RSAVerify = [System.Security.Cryptography.RSACryptoServiceProvider]::new()
+PS C:\\RSA_Lab\\Bob> $RSAVerify.FromXmlString($AlicePublicKey)`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">3</span>Verifica la firma</h3>
+                            <CodeBlock>
+{`# Verifica con chiave PUBBLICA di Alice
+PS C:\\RSA_Lab\\Bob> $valida = $RSAVerify.VerifyData($bytes, [System.Security.Cryptography.HashAlgorithmName]::SHA256, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1, $firma)
+
+# Visualizza risultato
+PS C:\\RSA_Lab\\Bob> if ($valida) { 
+    Write-Host "✅ FIRMA VALIDA! Il documento proviene da Alice" -ForegroundColor Green 
+} else { 
+    Write-Host "❌ FIRMA NON VALIDA! Il documento è stato alterato o non proviene da Alice" -ForegroundColor Red 
+}`}
+                            </CodeBlock>
+                            <div className="terminal-output">
+                                <span className="output-success">✅ FIRMA VALIDA! Il documento proviene da Alice</span>
+                            </div>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>🎉 Verifica riuscita!</strong><br/>
+                            Bob ha confermato che:<br/>
+                            • Il documento proviene davvero da Alice<br/>
+                            • Il contenuto non è stato modificato<br/>
+                            • Alice non può negare di averlo inviato
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 13: Test manomissione
+            {
+                title: "STEP 11: Test Sicurezza - Manomissione",
+                content: () => (
+                    <div>
+                        <h3>🔍 Cosa succede se qualcuno modifica il documento?</h3>
+
+                        <div className="warning-box">
+                            <strong>Esperimento:</strong> Simuliamo un attacco dove qualcuno modifica il documento 
+                            dopo che è stato firmato.
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span>Modifica il documento</h3>
+                            <CodeBlock>
+{`# Nel terminale di Bob (simula attacco)
+PS C:\\RSA_Lab\\Bob> "Contratto RIFIUTATO" | Out-File "documento_firmato.txt" -Force
+
+# Prova a verificare la stessa firma
+PS C:\\RSA_Lab\\Bob> $documento = Get-Content "documento_firmato.txt" -Raw
+PS C:\\RSA_Lab\\Bob> $bytes = [System.Text.Encoding]::UTF8.GetBytes($documento.Trim())
+PS C:\\RSA_Lab\\Bob> $valida = $RSAVerify.VerifyData($bytes, [System.Security.Cryptography.HashAlgorithmName]::SHA256, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1, $firma)
+PS C:\\RSA_Lab\\Bob> $valida`}
+                            </CodeBlock>
+                            <div className="terminal-output">
+                                <span className="output-error">False</span>
+                            </div>
+                        </div>
+
+                        <div className="danger-box">
+                            <strong>❌ FIRMA NON VALIDA!</strong><br/>
+                            Il sistema ha rilevato che il documento è stato modificato. 
+                            La verifica fallisce perché l'hash del documento modificato non corrisponde all'hash firmato.
+                        </div>
+
+                        <div className="success-box">
+                            <strong>🔐 Sicurezza garantita:</strong><br/>
+                            • Qualsiasi modifica al documento viene rilevata<br/>
+                            • Non è possibile falsificare la firma senza la chiave privata<br/>
+                            • L'integrità del messaggio è protetta
+                        </div>
+
+                        <div className="info-box">
+                            <strong>💡 Nella pratica:</strong> Le firme digitali sono usate per:<br/>
+                            • Documenti legali e contratti<br/>
+                            • Aggiornamenti software (per verificare che non siano stati alterati)<br/>
+                            • Email certificate (PEC)<br/>
+                            • Transazioni finanziarie
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 14: Cifratura + Firma
+            {
+                title: "STEP 12: Cifratura + Firma Insieme",
+                content: () => (
+                    <div>
+                        <h3>🔐 Massima Sicurezza: Cifratura + Firma</h3>
+
+                        <div className="info-box">
+                            <strong>Scenario Best Practice:</strong><br/>
+                            Alice vuole inviare un messaggio che sia:<br/>
+                            • <strong>Segreto</strong> (solo Bob può leggerlo) → Cifratura<br/>
+                            • <strong>Autenticato</strong> (Bob sa che viene da Alice) → Firma
+                        </div>
+
+                        <div className="step-box">
+                            <h3><span className="step-number">1</span><span className="alice-badge">Alice</span>: Prima firma, poi cifra</h3>
+                            <CodeBlock>
+{`# Nel terminale di Alice
+PS C:\\RSA_Lab\\Alice> $messaggio = "Informazioni confidenziali"
+PS C:\\RSA_Lab\\Alice> $bytes = [System.Text.Encoding]::UTF8.GetBytes($messaggio)
+
+# PASSO 1: Firma con chiave PRIVATA di Alice
+PS C:\\RSA_Lab\\Alice> $firma = $AliceRSA.SignData($bytes, [System.Security.Cryptography.HashAlgorithmName]::SHA256, [System.Security.Cryptography.RSASignaturePadding]::Pkcs1)
+
+# Combina messaggio + firma
+PS C:\\RSA_Lab\\Alice> $combinato = $bytes + $firma
+
+# PASSO 2: Cifra tutto con chiave PUBBLICA di Bob
+PS C:\\RSA_Lab\\Alice> $RSAEncrypt = [System.Security.Cryptography.RSACryptoServiceProvider]::new()
+PS C:\\RSA_Lab\\Alice> $BobPublicKey = Get-Content "bob_public.xml" -Raw
+PS C:\\RSA_Lab\\Alice> $RSAEncrypt.FromXmlString($BobPublicKey)
+
+# Nota: per messaggi grandi, usare cifratura ibrida
+# Per questo esempio, usiamo un messaggio breve`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="warning-box">
+                            <strong>⚠️ Limitazione RSA:</strong><br/>
+                            RSA può cifrare solo dati piccoli (max ~245 bytes con chiavi 2048 bit).<br/>
+                            Per messaggi più grandi, si usa <strong>cifratura ibrida</strong>:<br/>
+                            1. Genera chiave AES casuale<br/>
+                            2. Cifra il messaggio con AES (veloce)<br/>
+                            3. Cifra la chiave AES con RSA<br/>
+                            4. Invia messaggio cifrato AES + chiave cifrata RSA
+                        </div>
+
+                        <div className="success-box">
+                            <strong>✅ Risultato:</strong><br/>
+                            Il messaggio è ora:<br/>
+                            • <strong>Segreto:</strong> Solo Bob può decifrarlo (ha la chiave privata)<br/>
+                            • <strong>Autenticato:</strong> Bob può verificare che viene da Alice (verifica firma)<br/>
+                            • <strong>Integro:</strong> Qualsiasi modifica viene rilevata
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 15: Script Completo
+            {
+                title: "Script Completo Riepilogativo",
+                content: () => (
+                    <div>
+                        <h3>📝 Script Completo per Reference</h3>
+
+                        <div className="info-box">
+                            Ecco uno script completo che riassume tutte le operazioni. 
+                            Puoi salvarlo come <code>RSA_Demo.ps1</code> per reference futuro.
+                        </div>
+
+                        <CodeBlock>
+{`# RSA_Demo.ps1 - Script completo per demo RSA
+# Prof. Thomas Casali - ITTS
+
+# === GENERAZIONE CHIAVI ===
+function New-RSAKeyPair {
+    param([int]$KeySize = 2048)
+    $rsa = [System.Security.Cryptography.RSACryptoServiceProvider]::new($KeySize)
+    return $rsa
+}
+
+# === CIFRATURA ===
+function Encrypt-Message {
+    param(
+        [string]$Message,
+        [string]$PublicKeyXml
+    )
+    $rsa = [System.Security.Cryptography.RSACryptoServiceProvider]::new()
+    $rsa.FromXmlString($PublicKeyXml)
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($Message)
+    $encrypted = $rsa.Encrypt($bytes, $false)
+    return [Convert]::ToBase64String($encrypted)
+}
+
+# === DECIFRATURA ===
+function Decrypt-Message {
+    param(
+        [string]$EncryptedBase64,
+        [System.Security.Cryptography.RSACryptoServiceProvider]$RSAPrivate
+    )
+    $encrypted = [Convert]::FromBase64String($EncryptedBase64)
+    $decrypted = $RSAPrivate.Decrypt($encrypted, $false)
+    return [System.Text.Encoding]::UTF8.GetString($decrypted)
+}
+
+# === FIRMA ===
+function New-Signature {
+    param(
+        [string]$Message,
+        [System.Security.Cryptography.RSACryptoServiceProvider]$RSAPrivate
+    )
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($Message)
+    $signature = $RSAPrivate.SignData($bytes, 
+        [System.Security.Cryptography.HashAlgorithmName]::SHA256,
+        [System.Security.Cryptography.RSASignaturePadding]::Pkcs1)
+    return [Convert]::ToBase64String($signature)
+}
+
+# === VERIFICA FIRMA ===
+function Test-Signature {
+    param(
+        [string]$Message,
+        [string]$SignatureBase64,
+        [string]$PublicKeyXml
+    )
+    $rsa = [System.Security.Cryptography.RSACryptoServiceProvider]::new()
+    $rsa.FromXmlString($PublicKeyXml)
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($Message)
+    $signature = [Convert]::FromBase64String($SignatureBase64)
+    return $rsa.VerifyData($bytes,
+        [System.Security.Cryptography.HashAlgorithmName]::SHA256,
+        [System.Security.Cryptography.RSASignaturePadding]::Pkcs1,
+        $signature)
+}
+
+# Esempio di utilizzo
+Write-Host "=== DEMO RSA ===" -ForegroundColor Cyan
+
+# Alice genera chiavi
+$Alice = New-RSAKeyPair
+Write-Host "✓ Alice: chiavi generate" -ForegroundColor Green
+
+# Bob genera chiavi
+$Bob = New-RSAKeyPair
+Write-Host "✓ Bob: chiavi generate" -ForegroundColor Green
+
+# Alice cifra per Bob
+$msg = "Ciao Bob!"
+$encrypted = Encrypt-Message -Message $msg -PublicKeyXml $Bob.ToXmlString($false)
+Write-Host "✓ Alice ha cifrato: '$msg'" -ForegroundColor Green
+
+# Bob decifra
+$decrypted = Decrypt-Message -EncryptedBase64 $encrypted -RSAPrivate $Bob
+Write-Host "✓ Bob ha decifrato: '$decrypted'" -ForegroundColor Green
+
+# Alice firma
+$signature = New-Signature -Message $msg -RSAPrivate $Alice
+Write-Host "✓ Alice ha firmato il messaggio" -ForegroundColor Green
+
+# Bob verifica
+$valid = Test-Signature -Message $msg -SignatureBase64 $signature -PublicKeyXml $Alice.ToXmlString($false)
+Write-Host "✓ Firma valida: $valid" -ForegroundColor $(if($valid){"Green"}else{"Red"})
+
+Write-Host "`n=== DEMO COMPLETATA ===" -ForegroundColor Cyan`}
+                        </CodeBlock>
+
+                        <div className="success-box">
+                            <strong>💾 Salva questo script!</strong> Puoi usarlo come riferimento per future implementazioni.
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 16: Esercizi
+            {
+                title: "Esercizi Proposti",
+                content: () => (
+                    <div>
+                        <h3>🎯 Esercitazioni da Completare</h3>
+
+                        <div className="step-box">
+                            <strong>📝 Esercizio 1: Comunicazione a Tre</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                Aggiungi un terzo utente (Charlie) e simula uno scambio di messaggi tra Alice, Bob e Charlie. 
+                                Ogni persona deve avere la propria coppia di chiavi.
+                            </p>
+                        </div>
+
+                        <div className="step-box">
+                            <strong>📝 Esercizio 2: Catena di Firme</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                Alice crea un documento, lo firma. Bob riceve, verifica, aggiunge un commento e firma anche lui. 
+                                Alice verifica entrambe le firme.
+                            </p>
+                        </div>
+
+                        <div className="step-box">
+                            <strong>📝 Esercizio 3: Chiavi di Dimensioni Diverse</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                Genera chiavi di 1024, 2048 e 4096 bit. Confronta i tempi di generazione, 
+                                cifratura e decifratura. Documenta le differenze.
+                            </p>
+                        </div>
+
+                        <div className="step-box">
+                            <strong>📝 Esercizio 4: Cifratura Ibrida</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                Implementa un sistema di cifratura ibrida:<br/>
+                                1. Genera chiave AES casuale<br/>
+                                2. Cifra un file grande con AES<br/>
+                                3. Cifra la chiave AES con RSA<br/>
+                                4. Decifra seguendo il processo inverso
+                            </p>
+                        </div>
+
+                        <div className="step-box">
+                            <strong>📝 Esercizio 5: Gestione Certificati</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                Esporta le chiavi in formato PEM e importale. Simula uno scenario dove le chiavi 
+                                vengono salvate e ricaricate in sessioni diverse.
+                            </p>
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 17: Best Practices
+            {
+                title: "Best Practices e Raccomandazioni",
+                content: () => (
+                    <div>
+                        <h3>✅ Best Practices per RSA in Produzione</h3>
+
+                        <div className="success-box">
+                            <strong>1. Dimensione Chiavi</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>Minimo: 2048 bit (sicuro fino al 2030)</li>
+                                <li>Consigliato: 3072-4096 bit per dati molto sensibili</li>
+                                <li>MAI usare chiavi inferiori a 2048 bit</li>
+                            </ul>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>2. Protezione Chiavi Private</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>Usa sempre password per proteggere chiavi private</li>
+                                <li>Salva in luoghi sicuri (HSM per produzione)</li>
+                                <li>Non condividere MAI via email o chat</li>
+                                <li>Ruota le chiavi periodicamente</li>
+                            </ul>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>3. Padding</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>Usa sempre OAEP per cifratura (più sicuro di PKCS1)</li>
+                                <li>Usa PSS per firme digitali quando possibile</li>
+                            </ul>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>4. Cifratura Ibrida</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>Per dati > 200 bytes, usa AES + RSA</li>
+                                <li>RSA cifra solo la chiave simmetrica</li>
+                                <li>AES cifra i dati veri (molto più veloce)</li>
+                            </ul>
+                        </div>
+
+                        <div className="warning-box">
+                            <strong>⚠️ Cosa NON fare:</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>❌ Non implementare RSA da zero (usa librerie certificate)</li>
+                                <li>❌ Non usare lo stesso padding per tutto</li>
+                                <li>❌ Non riusare chiavi per scopi diversi</li>
+                                <li>❌ Non ignorare gli errori di verifica firma</li>
+                            </ul>
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 18: Troubleshooting
+            {
+                title: "Troubleshooting Comune",
+                content: () => (
+                    <div>
+                        <h3>🔧 Problemi Comuni e Soluzioni</h3>
+
+                        <div className="danger-box">
+                            <strong>Errore: "Bad Key" o "Key does not exist"</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                <strong>Causa:</strong> Chiave non caricata correttamente o variabile persa<br/>
+                                <strong>Soluzione:</strong> Ricrea l'oggetto RSA e ricarica la chiave XML
+                            </p>
+                            <CodeBlock>
+{`$rsa = [System.Security.Cryptography.RSACryptoServiceProvider]::new()
+$keyXml = Get-Content "chiave.xml" -Raw
+$rsa.FromXmlString($keyXml)`}
+                            </CodeBlock>
+                        </div>
+
+                        <div className="danger-box">
+                            <strong>Errore: "The data to be decrypted exceeds the maximum"</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                <strong>Causa:</strong> Messaggio troppo lungo per RSA<br/>
+                                <strong>Soluzione:</strong> Usa cifratura ibrida (AES + RSA)
+                            </p>
+                        </div>
+
+                        <div className="danger-box">
+                            <strong>Errore: "Signature verification failed"</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                <strong>Causa:</strong> Documento modificato o chiave pubblica sbagliata<br/>
+                                <strong>Soluzione:</strong> Verifica l'integrità del documento e che stai usando la chiave pubblica corretta
+                            </p>
+                        </div>
+
+                        <div className="danger-box">
+                            <strong>Errore: "File cannot be loaded"</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                <strong>Causa:</strong> Percorso file errato o encoding problematico<br/>
+                                <strong>Soluzione:</strong> Usa sempre <code>-Raw</code> con Get-Content per XML e <code>-Encoding UTF8</code> per testo
+                            </p>
+                        </div>
+
+                        <div className="info-box">
+                            <strong>💡 Debugging Tips:</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>Verifica sempre che le variabili siano popolate: <code>$var -ne $null</code></li>
+                                <li>Stampa la lunghezza dei bytes: <code>$bytes.Length</code></li>
+                                <li>Usa <code>Write-Host</code> per debug intermedio</li>
+                                <li>Testa ogni passo separatamente</li>
+                            </ul>
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 19: Risorse
+            {
+                title: "Risorse e Approfondimenti",
+                content: () => (
+                    <div>
+                        <h3>📚 Risorse per Approfondire</h3>
+
+                        <div className="info-box">
+                            <strong>📖 Documentazione Microsoft:</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li><code>RSACryptoServiceProvider</code> Class</li>
+                                <li>System.Security.Cryptography Namespace</li>
+                                <li>PowerShell Security Best Practices</li>
+                            </ul>
+                        </div>
+
+                        <div className="info-box">
+                            <strong>🌐 Standard e RFC:</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>RFC 8017 - PKCS #1: RSA Cryptography Specifications</li>
+                                <li>RFC 3447 - Public-Key Cryptography Standards</li>
+                                <li>NIST Guidelines on Key Management</li>
+                            </ul>
+                        </div>
+
+                        <div className="info-box">
+                            <strong>🔧 Tool Utili:</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li><strong>OpenSSL:</strong> Toolkit crittografico completo</li>
+                                <li><strong>PuTTYgen:</strong> Generazione chiavi SSH/RSA</li>
+                                <li><strong>CertUtil:</strong> Tool Windows per certificati</li>
+                            </ul>
+                        </div>
+
+                        <div className="info-box">
+                            <strong>📺 Video Educativi:</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>Computerphile - RSA Encryption</li>
+                                <li>Khan Academy - Journey into Cryptography</li>
+                                <li>3Blue1Brown - Public Key Cryptography</li>
+                            </ul>
+                        </div>
+
+                        <div className="warning-box">
+                            <strong>⚠️ Sicurezza:</strong> Non implementare mai crittografia per applicazioni 
+                            reali senza consultare esperti di sicurezza. Usa sempre librerie certificate e testate.
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 20: Conclusioni
+            {
+                title: "Conclusioni",
+                content: () => (
+                    <div>
+                        <h2 style={{textAlign: 'center', color: '#667eea', marginBottom: '2rem'}}>
+                            Esercitazione Completata!
+                        </h2>
+
+                        <div className="success-box">
+                            <strong>✅ Competenze Acquisite:</strong>
+                            <ul style={{marginTop: '0.5rem', lineHeight: '2'}}>
+                                <li>Generazione di coppie di chiavi RSA con PowerShell</li>
+                                <li>Cifratura e decifratura di messaggi</li>
+                                <li>Creazione e verifica di firme digitali</li>
+                                <li>Comprensione pratica della sicurezza RSA</li>
+                                <li>Uso delle API .NET per crittografia</li>
+                            </ul>
+                        </div>
+
+                        <div className="info-box" style={{marginTop: '2rem'}}>
+                            <strong>🎯 Punti Chiave da Ricordare:</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>RSA usa <strong>due chiavi</strong>: pubblica e privata</li>
+                                <li>La chiave pubblica <strong>cifra</strong>, la privata <strong>decifra</strong></li>
+                                <li>La chiave privata <strong>firma</strong>, la pubblica <strong>verifica</strong></li>
+                                <li>La sicurezza si basa sulla <strong>difficoltà di fattorizzazione</strong></li>
+                                <li>In produzione: chiavi ≥ 2048 bit e cifratura ibrida</li>
+                            </ul>
+                        </div>
+
+                        <div style={{textAlign: 'center', marginTop: '3rem'}}>
+                            <div style={{fontSize: '4rem', marginBottom: '1rem'}}>🎓</div>
+                            <h2 style={{color: '#667eea'}}>Ottimo Lavoro!</h2>
+                            <p style={{fontSize: '1.2rem', color: '#666', marginTop: '1rem'}}>
+                                Ora sai come funziona RSA sia in teoria che in pratica
+                            </p>
+                        </div>
+
+                        <div className="info-box" style={{marginTop: '2rem', textAlign: 'center'}}>
+                            <strong>📊 Prossimi Passi:</strong><br/>
+                            Completa gli esercizi proposti e sperimenta con scenari diversi!
+                        </div>
+                    </div>
+                )
+            }
+        ];
+
+        function Presentation() {
+            const [currentSlide, setCurrentSlide] = useState(0);
+
+            useEffect(() => {
+                const params = new URLSearchParams(window.location.search);
+                const slideParam = params.get('slide');
+                if (slideParam) {
+                    const slideIndex = parseInt(slideParam);
+                    if (slideIndex >= 0 && slideIndex < slidesData.length) {
+                        setCurrentSlide(slideIndex);
+                    }
+                }
+
+                const handleKeyPress = (e) => {
+                    if (e.key === 'ArrowRight') nextSlide();
+                    if (e.key === 'ArrowLeft') prevSlide();
+                };
+
+                window.addEventListener('keydown', handleKeyPress);
+                return () => window.removeEventListener('keydown', handleKeyPress);
+            }, [currentSlide]);
+
+            const nextSlide = () => {
+                if (currentSlide < slidesData.length - 1) {
+                    setCurrentSlide(currentSlide + 1);
+                }
+            };
+
+            const prevSlide = () => {
+                if (currentSlide > 0) {
+                    setCurrentSlide(currentSlide - 1);
+                }
+            };
+
+            const goToSlide = (index) => {
+                setCurrentSlide(index);
+            };
+
+            const goHome = () => {
+                window.location.href = 'index.html';
+            };
+
+            const slide = slidesData[currentSlide];
+            const SlideContent = slide.content;
+
+            return (
+                <div className="presentation">
+                    <div className="slide">
+                        <button className="home-button" onClick={goHome}>
+                            🏠 Dashboard
+                        </button>
+
+                        {slide.title && <h1>{slide.title}</h1>}
+                        
+                        <div className="content-area">
+                            <SlideContent />
+                        </div>
+
+                        <div className="navigation">
+                            <button 
+                                className="nav-button"
+                                onClick={prevSlide}
+                                disabled={currentSlide === 0}
+                            >
+                                ← Indietro
+                            </button>
+
+                            <div className="slide-indicator">
+                                {slidesData.map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className={`dot ${index === currentSlide ? 'active' : ''}`}
+                                        onClick={() => goToSlide(index)}
+                                        title={`Slide ${index + 1}`}
+                                    />
+                                ))}
+                                <span className="slide-number">
+                                    {currentSlide + 1} / {slidesData.length}
+                                </span>
+                            </div>
+
+                            <button 
+                                className="nav-button"
+                                onClick={nextSlide}
+                                disabled={currentSlide === slidesData.length - 1}
+                            >
+                                Avanti →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Presentation />);
+    </script>
+</body>
+</html>

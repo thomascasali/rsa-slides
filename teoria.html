@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teoria RSA - Crittografia Asimmetrica</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .presentation {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1100px;
+            width: 100%;
+            min-height: 650px;
+            padding: 3rem;
+            position: relative;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 1.8rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 1.3rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .highlight {
+            background: #fff59d;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+        }
+
+        .formula-box {
+            background: #f5f5f5;
+            border-left: 5px solid #667eea;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            font-family: 'Georgia', serif;
+            font-size: 1.2rem;
+        }
+
+        .formula-center {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .step-box {
+            background: #f0f4ff;
+            border: 2px solid #667eea;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 2rem;
+            justify-content: space-around;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .flex-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .icon-large {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 2rem;
+            left: 3rem;
+            right: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .nav-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-button:hover:not(:disabled) {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .slide-indicator {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: #667eea;
+            transform: scale(1.3);
+        }
+
+        .slide-number {
+            color: #999;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        .content-area {
+            max-height: calc(100vh - 300px);
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+
+        .content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .home-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .home-button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 2rem 1.5rem;
+                min-height: 500px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .flex-container {
+                flex-direction: column;
+            }
+
+            .navigation {
+                left: 1.5rem;
+                right: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const slidesData = [
+            // Slide 0: Titolo
+            {
+                title: "Algoritmo RSA",
+                content: () => (
+                    <div style={{textAlign: 'center', paddingTop: '3rem'}}>
+                        <div className="icon-large">🔐</div>
+                        <h1 style={{fontSize: '3.5rem', marginBottom: '1rem', border: 'none'}}>Algoritmo RSA</h1>
+                        <h2 style={{fontSize: '2rem', color: '#666', fontWeight: 'normal'}}>Crittografia a Chiave Pubblica</h2>
+                        <p style={{fontSize: '1.3rem', marginTop: '3rem', color: '#666'}}>
+                            Una guida completa alla teoria dell'algoritmo RSA
+                        </p>
+                        <div style={{marginTop: '4rem', fontSize: '1rem', color: '#999'}}>
+                            Prof. Thomas Casali - ITTS<br/>
+                            Sistemi e Reti - Classe Quinta
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 1: Crittografia Asimmetrica - Intro
+            {
+                title: "La Crittografia Asimmetrica",
+                content: () => (
+                    <div>
+                        <p style={{fontSize: '1.2rem', lineHeight: '1.9', marginBottom: '1.5rem'}}>
+                            La <strong>crittografia asimmetrica</strong>, detta anche <span className="highlight">crittografia a chiave pubblica</span>, 
+                            utilizza due chiavi diverse ma matematicamente correlate per codificare e decodificare i dati.
+                        </p>
+
+                        <div className="flex-container" style={{marginTop: '3rem'}}>
+                            <div className="flex-item">
+                                <div className="icon-large">🔓</div>
+                                <h3>Chiave Pubblica</h3>
+                                <p>Condivisa liberamente con tutti</p>
+                                <p style={{color: '#667eea', fontWeight: 'bold', marginTop: '0.5rem'}}>
+                                    Usata per CIFRARE
+                                </p>
+                            </div>
+                            
+                            <div style={{fontSize: '3rem', color: '#667eea'}}>⟷</div>
+                            
+                            <div className="flex-item">
+                                <div className="icon-large">🔒</div>
+                                <h3>Chiave Privata</h3>
+                                <p>Mantenuta segreta dal proprietario</p>
+                                <p style={{color: '#764ba2', fontWeight: 'bold', marginTop: '0.5rem'}}>
+                                    Usata per DECIFRARE
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="info-box" style={{marginTop: '2rem'}}>
+                            <strong>💡 Principio Fondamentale:</strong> Ciò che viene cifrato con una chiave 
+                            può essere decifrato SOLO con l'altra chiave della coppia.
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 2: Scambio Chiavi
+            {
+                title: "Come Funziona lo Scambio",
+                content: () => (
+                    <div>
+                        <p style={{marginBottom: '2rem'}}>
+                            Per comunicare in modo sicuro, <strong>Alice e Bob</strong> devono prima preparare le loro chiavi:
+                        </p>
+
+                        <div className="step-box">
+                            <strong>PASSO 1:</strong> Ogni utente genera la propria coppia di chiavi (pubblica + privata)
+                        </div>
+
+                        <div className="step-box">
+                            <strong>PASSO 2:</strong> Alice e Bob si scambiano solo le chiavi pubbliche
+                        </div>
+
+                        <div style={{textAlign: 'center', margin: '3rem 0'}}>
+                            <div style={{display: 'inline-block', textAlign: 'center', marginRight: '4rem'}}>
+                                <div style={{fontSize: '3rem'}}>👩‍💼</div>
+                                <strong>Alice</strong>
+                                <div style={{marginTop: '1rem', padding: '1rem', background: '#f0f4ff', borderRadius: '0.5rem'}}>
+                                    <div>🔓 Pub<sub>A</sub></div>
+                                    <div style={{color: '#dc3545', fontWeight: 'bold'}}>🔒 Pri<sub>A</sub> (segreta)</div>
+                                </div>
+                            </div>
+
+                            <div style={{display: 'inline-block', textAlign: 'center'}}>
+                                <div style={{fontSize: '3rem'}}>👨‍💼</div>
+                                <strong>Bob</strong>
+                                <div style={{marginTop: '1rem', padding: '1rem', background: '#f0f4ff', borderRadius: '0.5rem'}}>
+                                    <div>🔓 Pub<sub>B</sub></div>
+                                    <div style={{color: '#dc3545', fontWeight: 'bold'}}>🔒 Pri<sub>B</sub> (segreta)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="warning-box">
+                            <strong>⚠️ Regola d'Oro:</strong> Le chiavi private NON vengono MAI condivise!
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 3: Comunicazione Sicura
+            {
+                title: "Comunicazione Sicura con RSA",
+                content: () => (
+                    <div>
+                        <h3>Scenario: Alice vuole inviare un messaggio segreto a Bob</h3>
+
+                        <div className="step-box">
+                            <strong>1️⃣ Alice cifra con Pub<sub>B</sub></strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                Alice prende il suo messaggio e lo cifra usando la <strong>chiave pubblica di Bob</strong>
+                            </p>
+                        </div>
+
+                        <div style={{textAlign: 'center', margin: '2rem 0', fontSize: '1.5rem', color: '#667eea'}}>
+                            📝 Messaggio → 🔓 Pub<sub>B</sub> → 🔐 Cifrato
+                        </div>
+
+                        <div className="step-box">
+                            <strong>2️⃣ Bob decifra con Pri<sub>B</sub></strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                Bob riceve il messaggio cifrato e lo decifra usando la sua <strong>chiave privata</strong>
+                            </p>
+                        </div>
+
+                        <div style={{textAlign: 'center', margin: '2rem 0', fontSize: '1.5rem', color: '#764ba2'}}>
+                            🔐 Cifrato → 🔒 Pri<sub>B</sub> → 📝 Messaggio
+                        </div>
+
+                        <div className="success-box">
+                            <strong>✅ Sicurezza Garantita:</strong> Solo Bob, che possiede Pri<sub>B</sub>, 
+                            può decifrare il messaggio. Anche se qualcuno intercetta il messaggio cifrato, 
+                            non può leggerlo senza la chiave privata di Bob.
+                        </div>
+
+                        <div className="info-box">
+                            <strong>🔄 Comunicazione Bidirezionale:</strong> Per rispondere, Bob cifra con Pub<sub>A</sub> 
+                            e Alice decifra con Pri<sub>A</sub>.
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 4: Cos'è RSA
+            {
+                title: "L'Algoritmo RSA",
+                content: () => (
+                    <div>
+                        <p style={{fontSize: '1.2rem', marginBottom: '2rem'}}>
+                            <strong>RSA</strong> è l'algoritmo di crittografia asimmetrica più utilizzato al mondo, 
+                            inventato nel <span className="highlight">1977</span> da:
+                        </p>
+
+                        <div style={{display: 'flex', justifyContent: 'space-around', margin: '2rem 0'}}>
+                            <div style={{textAlign: 'center'}}>
+                                <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>👨‍🔬</div>
+                                <strong>Ron Rivest</strong>
+                            </div>
+                            <div style={{textAlign: 'center'}}>
+                                <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>👨‍🔬</div>
+                                <strong>Adi Shamir</strong>
+                            </div>
+                            <div style={{textAlign: 'center'}}>
+                                <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>👨‍🔬</div>
+                                <strong>Leonard Adleman</strong>
+                            </div>
+                        </div>
+
+                        <div className="info-box">
+                            <strong>🎓 MIT - Massachusetts Institute of Technology</strong>
+                        </div>
+
+                        <h3 style={{marginTop: '2rem'}}>Utilizzi Principali:</h3>
+                        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1rem'}}>
+                            <div className="step-box">
+                                <strong>🌐 HTTPS/SSL/TLS</strong><br/>
+                                Sicurezza dei siti web
+                            </div>
+                            <div className="step-box">
+                                <strong>✉️ Email Sicure</strong><br/>
+                                PGP/GPG encryption
+                            </div>
+                            <div className="step-box">
+                                <strong>✍️ Firme Digitali</strong><br/>
+                                Autenticazione documenti
+                            </div>
+                            <div className="step-box">
+                                <strong>🔐 VPN</strong><br/>
+                                Connessioni sicure
+                            </div>
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 5: Base Matematica
+            {
+                title: "La Matematica di RSA - Prerequisiti",
+                content: () => (
+                    <div>
+                        <h3>Concetti Matematici Necessari</h3>
+
+                        <div className="formula-box">
+                            <strong>1. Numeri Primi</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                Un numero è <strong>primo</strong> se è divisibile solo per 1 e per se stesso.
+                            </p>
+                            <p style={{marginTop: '0.5rem', color: '#666'}}>
+                                Esempi: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61...
+                            </p>
+                        </div>
+
+                        <div className="formula-box">
+                            <strong>2. Funzione φ di Eulero (Phi)</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                φ(n) conta quanti numeri minori di n sono <strong>coprimi</strong> con n 
+                                (non hanno fattori comuni tranne 1).
+                            </p>
+                            <div className="formula-center" style={{marginTop: '1rem'}}>
+                                Se p e q sono primi: <strong>φ(p × q) = (p-1) × (q-1)</strong>
+                            </div>
+                        </div>
+
+                        <div className="formula-box">
+                            <strong>3. Operazione Modulo (mod)</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                <strong>a mod b</strong> è il resto della divisione di a per b
+                            </p>
+                            <p style={{marginTop: '0.5rem', color: '#666'}}>
+                                Esempio: 17 mod 5 = 2 (perché 17 = 3 × 5 + <strong>2</strong>)
+                            </p>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>💡 Esempio Pratico:</strong><br/>
+                            Se p = 5 e q = 11, allora:<br/>
+                            • n = 5 × 11 = <strong>55</strong><br/>
+                            • φ(n) = (5-1) × (11-1) = 4 × 10 = <strong>40</strong>
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 6: Generazione Chiavi Passo 1-2
+            {
+                title: "Generazione Chiavi RSA - Parte 1",
+                content: () => (
+                    <div>
+                        <h3>I 5 Passi per Generare le Chiavi</h3>
+                        <p style={{marginBottom: '2rem'}}>Usiamo un esempio con numeri piccoli per semplicità:</p>
+
+                        <div className="step-box">
+                            <strong>PASSO 1: Scegliere due numeri primi p e q</strong>
+                            <div style={{marginTop: '1rem', padding: '1rem', background: 'white', borderRadius: '0.5rem'}}>
+                                <div style={{fontSize: '1.3rem', color: '#667eea'}}>
+                                    p = <strong>61</strong><br/>
+                                    q = <strong>53</strong>
+                                </div>
+                            </div>
+                            <p style={{marginTop: '0.5rem', color: '#666', fontSize: '0.95rem'}}>
+                                💡 Nella pratica si usano numeri primi di centinaia di cifre!
+                            </p>
+                        </div>
+
+                        <div className="step-box">
+                            <strong>PASSO 2: Calcolare n = p × q</strong>
+                            <div style={{marginTop: '1rem', padding: '1rem', background: 'white', borderRadius: '0.5rem'}}>
+                                <div style={{fontSize: '1.3rem'}}>
+                                    n = 61 × 53 = <strong style={{color: '#667eea'}}>3233</strong>
+                                </div>
+                            </div>
+                            <p style={{marginTop: '0.5rem', color: '#666', fontSize: '0.95rem'}}>
+                                📌 <strong>n</strong> sarà parte di entrambe le chiavi (pubblica e privata)
+                            </p>
+                        </div>
+
+                        <div className="info-box" style={{marginTop: '2rem'}}>
+                            <strong>🔐 Sicurezza di RSA:</strong> La sicurezza si basa sul fatto che è facile 
+                            moltiplicare due numeri primi (61 × 53), ma è molto difficile fattorizzare il risultato 
+                            (dato 3233, trovare 61 e 53). Con numeri grandi, è praticamente impossibile!
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 7: Generazione Chiavi Passo 3-5
+            {
+                title: "Generazione Chiavi RSA - Parte 2",
+                content: () => (
+                    <div>
+                        <div className="step-box">
+                            <strong>PASSO 3: Calcolare φ(n) = (p-1) × (q-1)</strong>
+                            <div style={{marginTop: '1rem', padding: '1rem', background: 'white', borderRadius: '0.5rem'}}>
+                                <div style={{fontSize: '1.3rem'}}>
+                                    φ(n) = (61-1) × (53-1) = 60 × 52 = <strong style={{color: '#667eea'}}>3120</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="step-box">
+                            <strong>PASSO 4: Scegliere e (esponente pubblico)</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                <strong>e</strong> deve soddisfare: 1 &lt; e &lt; φ(n) e MCD(e, φ(n)) = 1
+                            </p>
+                            <div style={{marginTop: '1rem', padding: '1rem', background: 'white', borderRadius: '0.5rem'}}>
+                                <div style={{fontSize: '1.3rem'}}>
+                                    e = <strong style={{color: '#667eea'}}>17</strong>
+                                </div>
+                                <p style={{fontSize: '0.9rem', color: '#666', marginTop: '0.5rem'}}>
+                                    (17 è coprimo con 3120 - non hanno fattori comuni)
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="step-box">
+                            <strong>PASSO 5: Calcolare d (esponente privato)</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                <strong>d</strong> deve soddisfare: (d × e) mod φ(n) = 1
+                            </p>
+                            <div style={{marginTop: '1rem', padding: '1rem', background: 'white', borderRadius: '0.5rem'}}>
+                                <div style={{fontSize: '1.3rem'}}>
+                                    d = <strong style={{color: '#764ba2'}}>2753</strong>
+                                </div>
+                                <p style={{fontSize: '0.9rem', color: '#666', marginTop: '0.5rem'}}>
+                                    Verifica: (2753 × 17) mod 3120 = 46801 mod 3120 = 1 ✓
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 8: Chiavi Finali
+            {
+                title: "Chiavi RSA Generate",
+                content: () => (
+                    <div>
+                        <div className="success-box" style={{padding: '2rem', marginTop: '2rem'}}>
+                            <h2 style={{textAlign: 'center', marginBottom: '2rem', color: '#28a745'}}>
+                                🎉 Chiavi Generate con Successo!
+                            </h2>
+
+                            <div style={{display: 'flex', justifyContent: 'space-around', gap: '2rem', marginTop: '2rem'}}>
+                                <div style={{flex: 1, background: 'white', padding: '1.5rem', borderRadius: '0.5rem', border: '3px solid #667eea'}}>
+                                    <div style={{textAlign: 'center', fontSize: '2rem', marginBottom: '1rem'}}>🔓</div>
+                                    <h3 style={{textAlign: 'center', color: '#667eea'}}>Chiave Pubblica</h3>
+                                    <div style={{fontSize: '1.5rem', textAlign: 'center', marginTop: '1rem'}}>
+                                        <strong>(e, n)</strong><br/>
+                                        <div style={{fontSize: '1.8rem', color: '#667eea', marginTop: '0.5rem'}}>
+                                            (17, 3233)
+                                        </div>
+                                    </div>
+                                    <p style={{textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem', color: '#666'}}>
+                                        ✅ Può essere condivisa pubblicamente
+                                    </p>
+                                </div>
+
+                                <div style={{flex: 1, background: 'white', padding: '1.5rem', borderRadius: '0.5rem', border: '3px solid #dc3545'}}>
+                                    <div style={{textAlign: 'center', fontSize: '2rem', marginBottom: '1rem'}}>🔒</div>
+                                    <h3 style={{textAlign: 'center', color: '#dc3545'}}>Chiave Privata</h3>
+                                    <div style={{fontSize: '1.5rem', textAlign: 'center', marginTop: '1rem'}}>
+                                        <strong>(d, n)</strong><br/>
+                                        <div style={{fontSize: '1.8rem', color: '#dc3545', marginTop: '0.5rem'}}>
+                                            (2753, 3233)
+                                        </div>
+                                    </div>
+                                    <p style={{textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem', color: '#666'}}>
+                                        ⚠️ Deve rimanere SEGRETA
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="info-box" style={{marginTop: '2rem'}}>
+                            <strong>📝 Riepilogo valori:</strong>
+                            <ul style={{marginTop: '0.5rem', lineHeight: '1.8'}}>
+                                <li>p = 61, q = 53 (numeri primi scelti)</li>
+                                <li>n = 3233 (modulo, comune a entrambe le chiavi)</li>
+                                <li>φ(n) = 3120 (funzione di Eulero)</li>
+                                <li>e = 17 (esponente pubblico)</li>
+                                <li>d = 2753 (esponente privato)</li>
+                            </ul>
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 9: Formule Cifratura/Decifratura
+            {
+                title: "Cifratura e Decifratura",
+                content: () => (
+                    <div>
+                        <h3>Le Formule Matematiche di RSA</h3>
+
+                        <div className="formula-box" style={{textAlign: 'center', padding: '2rem', marginTop: '2rem'}}>
+                            <h3 style={{color: '#667eea', marginBottom: '1.5rem'}}>🔐 CIFRATURA</h3>
+                            <div className="formula-center" style={{fontSize: '2rem', marginBottom: '1rem'}}>
+                                C = M<sup>e</sup> mod n
+                            </div>
+                            <p style={{color: '#666'}}>
+                                Il messaggio M viene elevato alla potenza e, poi si calcola il modulo n
+                            </p>
+                        </div>
+
+                        <div className="formula-box" style={{textAlign: 'center', padding: '2rem', marginTop: '2rem'}}>
+                            <h3 style={{color: '#764ba2', marginBottom: '1.5rem'}}>🔓 DECIFRATURA</h3>
+                            <div className="formula-center" style={{fontSize: '2rem', marginBottom: '1rem'}}>
+                                M = C<sup>d</sup> mod n
+                            </div>
+                            <p style={{color: '#666'}}>
+                                Il cifrato C viene elevato alla potenza d, poi si calcola il modulo n
+                            </p>
+                        </div>
+
+                        <div className="info-box" style={{marginTop: '2rem'}}>
+                            <strong>Legenda:</strong>
+                            <ul style={{marginTop: '0.5rem', lineHeight: '1.8'}}>
+                                <li><strong>M</strong> = Messaggio in chiaro (convertito in numero)</li>
+                                <li><strong>C</strong> = Messaggio cifrato (ciphertext)</li>
+                                <li><strong>e</strong> = Esponente pubblico (parte della chiave pubblica)</li>
+                                <li><strong>d</strong> = Esponente privato (parte della chiave privata)</li>
+                                <li><strong>n</strong> = Modulo (comune a entrambe le chiavi)</li>
+                            </ul>
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 10: Esempio Numerico
+            {
+                title: "Esempio Pratico Completo",
+                content: () => (
+                    <div>
+                        <p style={{marginBottom: '1.5rem'}}>
+                            Usiamo le chiavi generate: <strong>Pubblica (17, 3233)</strong> e <strong>Privata (2753, 3233)</strong>
+                        </p>
+
+                        <div className="step-box">
+                            <h3>📤 Alice vuole inviare il numero 123 a Bob</h3>
+                        </div>
+
+                        <div className="formula-box">
+                            <strong>CIFRATURA (Alice usa la chiave pubblica di Bob):</strong>
+                            <div className="formula-center" style={{marginTop: '1rem'}}>
+                                C = 123<sup>17</sup> mod 3233
+                            </div>
+                            <div style={{textAlign: 'center', marginTop: '1rem'}}>
+                                <div style={{padding: '1rem', background: 'white', borderRadius: '0.5rem', display: 'inline-block'}}>
+                                    <strong>Calcolo:</strong> 123<sup>17</sup> = 1.8...e+35<br/>
+                                    (1.8...e+35) mod 3233 = <span className="highlight" style={{fontSize: '1.5rem'}}>855</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style={{textAlign: 'center', fontSize: '1.5rem', margin: '2rem 0', color: '#667eea'}}>
+                            Alice invia → <strong>855</strong> → Bob
+                        </div>
+
+                        <div className="formula-box">
+                            <strong>DECIFRATURA (Bob usa la sua chiave privata):</strong>
+                            <div className="formula-center" style={{marginTop: '1rem'}}>
+                                M = 855<sup>2753</sup> mod 3233
+                            </div>
+                            <div style={{textAlign: 'center', marginTop: '1rem'}}>
+                                <div style={{padding: '1rem', background: 'white', borderRadius: '0.5rem', display: 'inline-block'}}>
+                                    <strong>Calcolo:</strong> 855<sup>2753</sup> = numero enorme<br/>
+                                    (numero enorme) mod 3233 = <span className="highlight" style={{fontSize: '1.5rem'}}>123</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>✅ Funziona!</strong> Bob ha recuperato il messaggio originale <strong>123</strong>
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 11: Perché è Sicuro
+            {
+                title: "Perché RSA è Sicuro?",
+                content: () => (
+                    <div>
+                        <h3>Il Problema della Fattorizzazione</h3>
+
+                        <div className="info-box">
+                            <strong>Informazioni Pubbliche (tutti le conoscono):</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>n = 3233 (modulo pubblico)</li>
+                                <li>e = 17 (esponente pubblico)</li>
+                                <li>Messaggio cifrato: C = 855</li>
+                            </ul>
+                        </div>
+
+                        <div className="warning-box">
+                            <strong>Informazione Segreta:</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>d = 2753 (esponente privato) ⚠️</li>
+                            </ul>
+                        </div>
+
+                        <h3 style={{marginTop: '2rem'}}>Come un attaccante potrebbe trovare d?</h3>
+
+                        <div className="step-box">
+                            <strong>PASSO 1:</strong> Deve fattorizzare n per trovare p e q<br/>
+                            <span style={{color: '#666', fontSize: '0.9rem'}}>3233 = ? × ?</span>
+                        </div>
+
+                        <div className="step-box">
+                            <strong>PASSO 2:</strong> Calcolare φ(n) = (p-1)(q-1)
+                        </div>
+
+                        <div className="step-box">
+                            <strong>PASSO 3:</strong> Calcolare d come inverso modulare di e
+                        </div>
+
+                        <div className="success-box">
+                            <strong>🔐 La Sicurezza:</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>Con n = 3233 (piccolo), è facile fattorizzare: 3233 = 61 × 53</li>
+                                <li>Con n di <strong>2048 bit</strong> (617 cifre decimali), è <span className="highlight">praticamente impossibile</span></li>
+                                <li>Ci vorrebbero <strong>miliardi di anni</strong> con i supercomputer attuali!</li>
+                            </ul>
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 12: Dimensioni Chiavi
+            {
+                title: "Dimensioni delle Chiavi",
+                content: () => (
+                    <div>
+                        <h3>Confronto tra Esempio Didattico e Uso Reale</h3>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Contesto</th>
+                                    <th>Bit</th>
+                                    <th>Cifre Decimali</th>
+                                    <th>Sicurezza</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style={{background: '#fff3cd'}}>
+                                    <td><strong>Nostro Esempio</strong></td>
+                                    <td>12 bit</td>
+                                    <td>~4 cifre (3233)</td>
+                                    <td>❌ Insicuro (didattico)</td>
+                                </tr>
+                                <tr>
+                                    <td>RSA Minimo</td>
+                                    <td>1024 bit</td>
+                                    <td>~309 cifre</td>
+                                    <td>⚠️ Deprecato</td>
+                                </tr>
+                                <tr style={{background: '#d4edda'}}>
+                                    <td><strong>RSA Standard</strong></td>
+                                    <td>2048 bit</td>
+                                    <td>~617 cifre</td>
+                                    <td>✅ Sicuro fino al 2030</td>
+                                </tr>
+                                <tr style={{background: '#d1ecf1'}}>
+                                    <td><strong>RSA Forte</strong></td>
+                                    <td>4096 bit</td>
+                                    <td>~1234 cifre</td>
+                                    <td>✅ Molto sicuro</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div className="info-box" style={{marginTop: '2rem'}}>
+                            <strong>⏱️ Tempo per fattorizzare n:</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li><strong>12 bit:</strong> Millisecondi</li>
+                                <li><strong>1024 bit:</strong> Anni (con supercomputer)</li>
+                                <li><strong>2048 bit:</strong> Miliardi di anni</li>
+                                <li><strong>4096 bit:</strong> Impossibile con tecnologia attuale</li>
+                            </ul>
+                        </div>
+
+                        <div className="warning-box">
+                            <strong>💡 Nel nostro esempio:</strong> Usiamo numeri piccoli solo per scopi didattici, 
+                            per poter fare i calcoli a mano e capire il meccanismo. In pratica si usano SEMPRE chiavi di 2048+ bit!
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 13: Limitazioni
+            {
+                title: "Limitazioni di RSA",
+                content: () => (
+                    <div>
+                        <h3>Cosa NON può fare RSA (o fa con difficoltà)</h3>
+
+                        <div className="warning-box">
+                            <strong>⚠️ Limitazione 1: Dimensione Messaggio</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                RSA può cifrare solo messaggi <strong>più piccoli di n</strong>. Se M ≥ n, non funziona!
+                            </p>
+                            <p style={{marginTop: '0.5rem', color: '#666'}}>
+                                Esempio: Con n = 3233, posso cifrare solo numeri da 0 a 3232
+                            </p>
+                        </div>
+
+                        <div className="warning-box">
+                            <strong>⚠️ Limitazione 2: Velocità</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                Le operazioni di elevamento a potenza con numeri enormi sono <strong>molto lente</strong> 
+                                rispetto agli algoritmi simmetrici (come AES).
+                            </p>
+                        </div>
+
+                        <div className="success-box">
+                            <strong>✅ Soluzione: Crittografia Ibrida</strong>
+                            <p style={{marginTop: '0.5rem'}}>
+                                In pratica, RSA viene usato per:
+                            </p>
+                            <ol style={{marginTop: '0.5rem', marginLeft: '1.5rem', lineHeight: '1.8'}}>
+                                <li>Scambiare una <strong>chiave simmetrica</strong> (AES) in modo sicuro</li>
+                                <li>La chiave AES cifra i <strong>dati veri</strong> (molto più veloce)</li>
+                                <li>Creare <strong>firme digitali</strong> per autenticazione</li>
+                            </ol>
+                        </div>
+
+                        <div className="info-box">
+                            <strong>🔐 HTTPS (siti web sicuri):</strong>
+                            <ul style={{marginTop: '0.5rem'}}>
+                                <li>RSA stabilisce la connessione e scambia la chiave AES</li>
+                                <li>AES cifra tutti i dati della sessione (molto più veloce)</li>
+                                <li>Risultato: sicurezza di RSA + velocità di AES</li>
+                            </ul>
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 14: Applicazioni
+            {
+                title: "Applicazioni Reali di RSA",
+                content: () => (
+                    <div>
+                        <h3>Dove usiamo RSA ogni giorno (spesso senza saperlo)</h3>
+
+                        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginTop: '2rem'}}>
+                            <div className="step-box">
+                                <div style={{fontSize: '2.5rem', textAlign: 'center', marginBottom: '0.5rem'}}>🌐</div>
+                                <strong>HTTPS / SSL / TLS</strong>
+                                <p style={{fontSize: '0.95rem', marginTop: '0.5rem'}}>
+                                    Il lucchetto nel browser. RSA protegge la connessione iniziale e lo scambio di chiavi.
+                                </p>
+                            </div>
+
+                            <div className="step-box">
+                                <div style={{fontSize: '2.5rem', textAlign: 'center', marginBottom: '0.5rem'}}>✉️</div>
+                                <strong>Email Sicure (PGP/GPG)</strong>
+                                <p style={{fontSize: '0.95rem', marginTop: '0.5rem'}}>
+                                    Cifratura end-to-end delle email usando chiavi RSA pubbliche e private.
+                                </p>
+                            </div>
+
+                            <div className="step-box">
+                                <div style={{fontSize: '2.5rem', textAlign: 'center', marginBottom: '0.5rem'}}>✍️</div>
+                                <strong>Firme Digitali</strong>
+                                <p style={{fontSize: '0.95rem', marginTop: '0.5rem'}}>
+                                    Documenti legali, software, aggiornamenti di sistema verificati con RSA.
+                                </p>
+                            </div>
+
+                            <div className="step-box">
+                                <div style={{fontSize: '2.5rem', textAlign: 'center', marginBottom: '0.5rem'}}>🔐</div>
+                                <strong>VPN</strong>
+                                <p style={{fontSize: '0.95rem', marginTop: '0.5rem'}}>
+                                    Stabilire tunnel sicuri tra reti usando autenticazione e scambio chiavi RSA.
+                                </p>
+                            </div>
+
+                            <div className="step-box">
+                                <div style={{fontSize: '2.5rem', textAlign: 'center', marginBottom: '0.5rem'}}>💳</div>
+                                <strong>Transazioni Bancarie</strong>
+                                <p style={{fontSize: '0.95rem', marginTop: '0.5rem'}}>
+                                    Home banking, POS, carte di credito protette da RSA.
+                                </p>
+                            </div>
+
+                            <div className="step-box">
+                                <div style={{fontSize: '2.5rem', textAlign: 'center', marginBottom: '0.5rem'}}>🔑</div>
+                                <strong>SSH</strong>
+                                <p style={{fontSize: '0.95rem', marginTop: '0.5rem'}}>
+                                    Connessioni remote sicure a server usando chiavi RSA.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="success-box" style={{marginTop: '2rem'}}>
+                            <strong>💡 Lo sapevi?</strong> Ogni giorno avvengono <strong>miliardi</strong> di operazioni RSA 
+                            nei nostri smartphone, computer e server web senza che ce ne accorgiamo!
+                        </div>
+                    </div>
+                )
+            },
+
+            // Slide 15: Conclusioni
+            {
+                title: "Conclusioni",
+                content: () => (
+                    <div>
+                        <h2 style={{textAlign: 'center', color: '#667eea', marginBottom: '2rem'}}>
+                            Cosa Abbiamo Imparato
+                        </h2>
+
+                        <div className="success-box">
+                            <strong>✅ Concetti Chiave:</strong>
+                            <ul style={{marginTop: '0.5rem', lineHeight: '2'}}>
+                                <li>Differenza tra crittografia <strong>simmetrica</strong> e <strong>asimmetrica</strong></li>
+                                <li>Coppia di chiavi: <strong>pubblica</strong> (condivisa) e <strong>privata</strong> (segreta)</li>
+                                <li>I <strong>5 passi</strong> per generare chiavi RSA</li>
+                                <li>Formule di <strong>cifratura</strong> (C = M<sup>e</sup> mod n) e <strong>decifratura</strong> (M = C<sup>d</sup> mod n)</li>
+                                <li>Sicurezza basata sulla difficoltà di <strong>fattorizzare numeri grandi</strong></li>
+                            </ul>
+                        </div>
+
+                        <div className="info-box" style={{marginTop: '1.5rem'}}>
+                            <strong>📚 Prossimo Passo:</strong>
+                            <p style={{marginTop: '0.5rem', fontSize: '1.1rem'}}>
+                                Passa al modulo <strong>"Esercitazione Pratica"</strong> per testare RSA 
+                                direttamente con PowerShell! Vedrai come Alice e Bob si scambiano messaggi cifrati 
+                                usando comandi reali.
+                            </p>
+                        </div>
+
+                        <div style={{textAlign: 'center', marginTop: '3rem'}}>
+                            <div style={{fontSize: '3rem', marginBottom: '1rem'}}>🎓</div>
+                            <h2 style={{color: '#667eea'}}>Teoria Completata!</h2>
+                            <p style={{fontSize: '1.2rem', color: '#666', marginTop: '1rem'}}>
+                                Sei pronto per la pratica?
+                            </p>
+                        </div>
+                    </div>
+                )
+            }
+        ];
+
+        function Presentation() {
+            const [currentSlide, setCurrentSlide] = useState(0);
+
+            useEffect(() => {
+                // Leggi il parametro ?slide=N dall'URL
+                const params = new URLSearchParams(window.location.search);
+                const slideParam = params.get('slide');
+                if (slideParam) {
+                    const slideIndex = parseInt(slideParam);
+                    if (slideIndex >= 0 && slideIndex < slidesData.length) {
+                        setCurrentSlide(slideIndex);
+                    }
+                }
+
+                // Gestione tasti freccia
+                const handleKeyPress = (e) => {
+                    if (e.key === 'ArrowRight') nextSlide();
+                    if (e.key === 'ArrowLeft') prevSlide();
+                };
+
+                window.addEventListener('keydown', handleKeyPress);
+                return () => window.removeEventListener('keydown', handleKeyPress);
+            }, [currentSlide]);
+
+            const nextSlide = () => {
+                if (currentSlide < slidesData.length - 1) {
+                    setCurrentSlide(currentSlide + 1);
+                }
+            };
+
+            const prevSlide = () => {
+                if (currentSlide > 0) {
+                    setCurrentSlide(currentSlide - 1);
+                }
+            };
+
+            const goToSlide = (index) => {
+                setCurrentSlide(index);
+            };
+
+            const goHome = () => {
+                window.location.href = 'index.html';
+            };
+
+            const slide = slidesData[currentSlide];
+            const SlideContent = slide.content;
+
+            return (
+                <div className="presentation">
+                    <div className="slide">
+                        <button className="home-button" onClick={goHome}>
+                            🏠 Dashboard
+                        </button>
+
+                        {slide.title && <h1>{slide.title}</h1>}
+                        
+                        <div className="content-area">
+                            <SlideContent />
+                        </div>
+
+                        <div className="navigation">
+                            <button 
+                                className="nav-button"
+                                onClick={prevSlide}
+                                disabled={currentSlide === 0}
+                            >
+                                ← Indietro
+                            </button>
+
+                            <div className="slide-indicator">
+                                {slidesData.map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className={`dot ${index === currentSlide ? 'active' : ''}`}
+                                        onClick={() => goToSlide(index)}
+                                        title={`Slide ${index + 1}`}
+                                    />
+                                ))}
+                                <span className="slide-number">
+                                    {currentSlide + 1} / {slidesData.length}
+                                </span>
+                            </div>
+
+                            <button 
+                                className="nav-button"
+                                onClick={nextSlide}
+                                disabled={currentSlide === slidesData.length - 1}
+                            >
+                                Avanti →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Presentation />);
+    </script>
+</body>
+</html>
