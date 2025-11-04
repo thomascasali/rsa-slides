@@ -3,7 +3,7 @@ import type { Slide } from '../../types';
 export const advancedSlides: Slide[] = [
   // Slide 47: Perché è Sicuro
   {
-    id: 62,
+    id: 68,
     title: 'Perché RSA è Sicuro?',
     category: 'advanced',
     content: () => (
@@ -58,7 +58,7 @@ export const advancedSlides: Slide[] = [
 
   // Slide 48: Dimensioni Chiavi
   {
-    id: 63,
+    id: 69,
     title: 'Dimensioni delle Chiavi',
     category: 'advanced',
     content: () => (
@@ -127,7 +127,7 @@ export const advancedSlides: Slide[] = [
 
   // Slide 49: Limitazioni
   {
-    id: 64,
+    id: 70,
     title: 'Limitazioni di RSA',
     category: 'advanced',
     content: () => (
@@ -178,7 +178,7 @@ export const advancedSlides: Slide[] = [
 
   // Slide 35: Applicazioni Reali
   {
-    id: 65,
+    id: 71,
     title: 'Applicazioni Reali di RSA',
     category: 'advanced',
     content: () => (
@@ -248,7 +248,7 @@ export const advancedSlides: Slide[] = [
 
   // Slide 51: Conclusioni Finali
   {
-    id: 66,
+    id: 72,
     title: 'Conclusioni',
     category: 'advanced',
     content: () => (

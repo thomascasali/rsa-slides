@@ -1,4 +1,4 @@
-import { Lock, Book, Code, Zap, Shield, ArrowRight, Terminal, Key } from 'lucide-react';
+import { Lock, Book, Code, Zap, Shield, ArrowRight, Terminal, Key, RefreshCw } from 'lucide-react';
 import { getSlideStats, getSlidePosition } from '../data/slides';
 
 interface DashboardProps {
@@ -27,7 +27,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'symmetric',
     },
     {
-      id: 22,
+      id: 23,
       title: 'Algoritmo RSA',
       description: 'I 5 Passi di RSA ed Esempi Numerici',
       icon: Lock,
@@ -35,7 +35,15 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'asymmetric',
     },
     {
-      id: 27,
+      id: 28,
+      title: 'Cifratura Ibrida',
+      description: 'Confronti, Benchmarks, WhatsApp, HTTPS/TLS',
+      icon: RefreshCw,
+      color: 'indigo',
+      category: 'hybrid',
+    },
+    {
+      id: 33,
       title: 'Pratica OpenSSL',
       description: 'Esercitazioni Cross-Platform con OpenSSL',
       icon: Terminal,
@@ -43,7 +51,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'openssl',
     },
     {
-      id: 42,
+      id: 48,
       title: 'Pratica PowerShell',
       description: 'Esercitazioni Windows con Alice e Bob',
       icon: Code,
@@ -51,7 +59,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'practice',
     },
     {
-      id: 62,
+      id: 68,
       title: 'Argomenti Avanzati',
       description: 'Sicurezza, Limitazioni e Applicazioni Reali',
       icon: Shield,
@@ -83,6 +91,12 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       border: 'border-purple-700',
       text: 'text-purple-300',
       hover: 'hover:border-purple-500',
+    },
+    indigo: {
+      bg: 'bg-gradient-to-br from-indigo-900/50 to-indigo-800/50',
+      border: 'border-indigo-700',
+      text: 'text-indigo-300',
+      hover: 'hover:border-indigo-500',
     },
     teal: {
       bg: 'bg-gradient-to-br from-teal-900/50 to-teal-800/50',
@@ -126,13 +140,13 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Statistiche */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-12">
           <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/30 border border-blue-700 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold text-blue-300">{stats.total}</div>
             <div className="text-gray-400 mt-2">Totali</div>
           </div>
-          <div className="bg-gradient-to-br from-indigo-900/30 to-indigo-800/30 border border-indigo-700 rounded-lg p-6 text-center">
-            <div className="text-4xl font-bold text-indigo-300">{stats.byCategory.intro + stats.byCategory.theory}</div>
+          <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/30 border border-blue-700 rounded-lg p-6 text-center">
+            <div className="text-4xl font-bold text-blue-300">{stats.byCategory.intro + stats.byCategory.theory}</div>
             <div className="text-gray-400 mt-2">Intro</div>
           </div>
           <div className="bg-gradient-to-br from-green-900/30 to-green-800/30 border border-green-700 rounded-lg p-6 text-center">
@@ -142,6 +156,10 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
           <div className="bg-gradient-to-br from-purple-900/30 to-purple-800/30 border border-purple-700 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold text-purple-300">{stats.byCategory.asymmetric}</div>
             <div className="text-gray-400 mt-2">Asimmetrica</div>
+          </div>
+          <div className="bg-gradient-to-br from-indigo-900/30 to-indigo-800/30 border border-indigo-700 rounded-lg p-6 text-center">
+            <div className="text-4xl font-bold text-indigo-300">{stats.byCategory.hybrid}</div>
+            <div className="text-gray-400 mt-2">Ibrida</div>
           </div>
           <div className="bg-gradient-to-br from-teal-900/30 to-teal-800/30 border border-teal-700 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold text-teal-300">{stats.byCategory.openssl}</div>

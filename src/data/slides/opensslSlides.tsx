@@ -11,7 +11,7 @@ const CodeBlock = ({ children, language = 'bash' }: { children: string; language
 export const opensslSlides: Slide[] = [
   // Slide 12: Titolo OpenSSL
   {
-    id: 37,
+    id: 43,
     title: 'Esercitazione Pratica con OpenSSL',
     category: 'openssl',
     content: () => (
@@ -39,7 +39,7 @@ export const opensslSlides: Slide[] = [
 
   // Slide 13: Cos'è OpenSSL
   {
-    id: 38,
+    id: 44,
     title: "Cos'è OpenSSL?",
     category: 'openssl',
     content: () => (
@@ -93,7 +93,7 @@ export const opensslSlides: Slide[] = [
 
   // Slide 14: Installazione OpenSSL
   {
-    id: 39,
+    id: 45,
     title: 'Installazione OpenSSL',
     category: 'openssl',
     content: () => (
@@ -141,7 +141,7 @@ openssl version`}</CodeBlock>
 
   // Slide 15: Setup Lab
   {
-    id: 40,
+    id: 46,
     title: 'STEP 1: Setup Laboratorio',
     category: 'openssl',
     content: () => (
@@ -201,7 +201,7 @@ ls -la`}</CodeBlock>
 
   // Slide 16: Generazione Chiavi Alice
   {
-    id: 41,
+    id: 47,
     title: 'STEP 2: Generazione Chiavi Alice',
     category: 'openssl',
     content: () => (

@@ -3,6 +3,7 @@ export type SlideCategory =
   | 'theory'
   | 'symmetric'
   | 'asymmetric'
+  | 'hybrid'
   | 'openssl'
   | 'practice'
   | 'advanced';

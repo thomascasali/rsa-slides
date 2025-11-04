@@ -53,6 +53,7 @@ export function SlideViewer({ initialSlideIndex = 0, onGoHome }: SlideViewerProp
     theory: 'from-indigo-900/50 to-indigo-800/50 border-indigo-700',
     symmetric: 'from-green-900/50 to-green-800/50 border-green-700',
     asymmetric: 'from-purple-900/50 to-purple-800/50 border-purple-700',
+    hybrid: 'from-indigo-900/50 to-indigo-800/50 border-indigo-700',
     openssl: 'from-teal-900/50 to-teal-800/50 border-teal-700',
     practice: 'from-orange-900/50 to-orange-800/50 border-orange-700',
     advanced: 'from-red-900/50 to-red-800/50 border-red-700',

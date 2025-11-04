@@ -148,7 +148,7 @@ export const theorySlides: Slide[] = [
     category: 'theory',
     content: () => (
       <div className="space-y-6">
-        <p className="text-xl text-gray-300 mb-8">
+        <p className="text-xl text-gray-300 mb-6">
           Esistono diversi algoritmi asimmetrici, basati su problemi matematici complessi:
         </p>
 
@@ -162,8 +162,9 @@ export const theorySlides: Slide[] = [
               </div>
             </div>
             <p className="text-gray-300">
-              <strong className="text-indigo-300">Problema:</strong> Fattorizzazione di numeri primi grandi<br />
-              <strong className="text-indigo-300">Uso:</strong> Il più diffuso al mondo (HTTPS, email, firme digitali)
+              <strong className="text-indigo-300">Problema Matematico:</strong> Fattorizzazione di numeri primi grandi<br />
+              <strong className="text-indigo-300">Dimensioni Chiave:</strong> 2048-4096 bit (standard attuale)<br />
+              <strong className="text-indigo-300">Uso:</strong> Firme digitali, scambio chiavi, certificati X.509
             </p>
           </div>
 
@@ -176,8 +177,24 @@ export const theorySlides: Slide[] = [
               </div>
             </div>
             <p className="text-gray-300">
-              <strong className="text-purple-300">Problema:</strong> Logaritmo discreto su curve ellittiche<br />
-              <strong className="text-purple-300">Uso:</strong> Chiavi più corte con sicurezza equivalente (mobile, IoT)
+              <strong className="text-purple-300">Problema Matematico:</strong> Logaritmo discreto su curve ellittiche<br />
+              <strong className="text-purple-300">Dimensioni Chiave:</strong> 256-384 bit (equivalente a RSA-3072/RSA-7680)<br />
+              <strong className="text-purple-300">Uso:</strong> Mobile, IoT, Bitcoin, TLS 1.3 (più efficiente di RSA)
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-r from-green-900/40 to-green-800/20 border-2 border-green-700 rounded-lg p-6">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="text-5xl">🔄</div>
+              <div>
+                <h3 className="text-2xl font-bold text-green-300">ECDHE (Elliptic Curve Diffie-Hellman Ephemeral)</h3>
+                <p className="text-gray-400 text-sm">Variante moderna di Diffie-Hellman</p>
+              </div>
+            </div>
+            <p className="text-gray-300">
+              <strong className="text-green-300">Caratteristica:</strong> Genera chiavi <strong>effimere</strong> (temporanee) per ogni sessione<br />
+              <strong className="text-green-300">Vantaggio:</strong> Perfect Forward Secrecy (PFS) - se una chiave viene compromessa, le sessioni precedenti restano sicure<br />
+              <strong className="text-green-300">Uso:</strong> TLS 1.3, Signal, WhatsApp, SSH moderno
             </p>
           </div>
 
@@ -185,22 +202,133 @@ export const theorySlides: Slide[] = [
             <div className="flex items-center gap-4 mb-4">
               <div className="text-5xl">🧮</div>
               <div>
-                <h3 className="text-2xl font-bold text-blue-300">ElGamal</h3>
-                <p className="text-gray-400 text-sm">1985 - Taher ElGamal</p>
+                <h3 className="text-2xl font-bold text-blue-300">EdDSA (Edwards-curve Digital Signature Algorithm)</h3>
+                <p className="text-gray-400 text-sm">2011 - Daniel J. Bernstein</p>
               </div>
             </div>
             <p className="text-gray-300">
-              <strong className="text-blue-300">Problema:</strong> Logaritmo discreto in gruppi finiti<br />
-              <strong className="text-blue-300">Uso:</strong> Crittografia e firme digitali (GPG)
+              <strong className="text-blue-300">Curve:</strong> Ed25519 (Curve25519 per firme)<br />
+              <strong className="text-blue-300">Vantaggio:</strong> Veloce, sicuro, deterministico (no RNG vulnerabile)<br />
+              <strong className="text-blue-300">Uso:</strong> SSH keys, Git commits, cryptocurrencies
             </p>
           </div>
         </div>
 
-        <div className="bg-indigo-900/20 border-l-4 border-indigo-500 p-6 rounded-r-lg mt-8">
-          <strong className="text-indigo-300">🎯 Focus del Corso</strong>
+        <div className="bg-indigo-900/20 border-l-4 border-indigo-500 p-6 rounded-r-lg mt-6">
+          <strong className="text-indigo-300 text-lg">🎯 Tendenze Moderne</strong>
           <p className="text-gray-300 mt-2">
-            In questa dispensa ci concentreremo su <strong>RSA</strong>, l'algoritmo più utilizzato
-            e didatticamente più accessibile per comprendere i principi della crittografia asimmetrica.
+            RSA sta gradualmente lasciando spazio a <strong>ECC/ECDHE</strong> per l'efficienza,
+            ma rimane fondamentale per comprendere la crittografia asimmetrica. TLS 1.3 preferisce
+            <strong> X25519 (ECDHE)</strong> + <strong>EdDSA</strong> rispetto a RSA.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  // Slide 9b: Modalità di Cifratura Moderne (AES-GCM, ChaCha20-Poly1305)
+  {
+    id: 20,
+    title: 'Modalità di Cifratura Moderne: AEAD',
+    category: 'theory',
+    content: () => (
+      <div className="space-y-6">
+        <div className="bg-indigo-900/20 border-l-4 border-indigo-500 p-6 rounded-r-lg">
+          <h3 className="text-indigo-300 text-2xl font-bold mb-3">AEAD: Authenticated Encryption with Associated Data</h3>
+          <p className="text-gray-300 text-lg">
+            Le modalità <strong>AEAD</strong> combinano <strong>cifratura + autenticazione</strong> in un'unica operazione,
+            garantendo sia <strong>riservatezza</strong> che <strong>integrità</strong> dei dati.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <div className="bg-gradient-to-r from-green-900/40 to-green-800/20 border-2 border-green-700 rounded-lg p-6">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="text-5xl">🔐</div>
+              <div>
+                <h3 className="text-2xl font-bold text-green-300">AES-GCM (Galois/Counter Mode)</h3>
+                <p className="text-gray-400 text-sm">Standard NIST - Il più utilizzato</p>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <p className="text-gray-300">
+                <strong className="text-green-300">Come Funziona:</strong><br />
+                • Cifra i dati con AES in modalità Counter (CTR)<br />
+                • Calcola un <strong>tag di autenticazione</strong> usando Galois field multiplication<br />
+                • Un unico algoritmo fornisce sia cifratura che MAC (Message Authentication Code)
+              </p>
+              <div className="bg-gray-900 p-4 rounded-lg font-mono text-sm text-gray-400">
+                (Ciphertext, Auth_Tag) = AES_GCM_Encrypt(Plaintext, Key, Nonce)<br />
+                // Auth_Tag verifica che il messaggio non sia stato modificato
+              </div>
+              <p className="text-gray-300">
+                <strong className="text-green-300">Vantaggi:</strong><br />
+                • Velocissimo su CPU con istruzioni AES-NI + PCLMULQDQ<br />
+                • Parallelizzabile (usa più core CPU)<br />
+                • Standard industriale (TLS 1.2/1.3, IPsec, WPA3)
+              </p>
+              <p className="text-gray-300">
+                <strong className="text-yellow-300">Limitazione:</strong> Lento su CPU senza supporto hardware
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-r from-purple-900/40 to-purple-800/20 border-2 border-purple-700 rounded-lg p-6">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="text-5xl">🚀</div>
+              <div>
+                <h3 className="text-2xl font-bold text-purple-300">ChaCha20-Poly1305</h3>
+                <p className="text-gray-400 text-sm">2014 - Daniel J. Bernstein & Adam Langley (Google)</p>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <p className="text-gray-300">
+                <strong className="text-purple-300">Come Funziona:</strong><br />
+                • <strong>ChaCha20:</strong> Cifratura stream (non block cipher come AES)<br />
+                • <strong>Poly1305:</strong> MAC (autenticazione) velocissimo<br />
+                • Progettato per essere veloce senza istruzioni hardware speciali
+              </p>
+              <div className="bg-gray-900 p-4 rounded-lg font-mono text-sm text-gray-400">
+                (Ciphertext, Auth_Tag) = ChaCha20_Poly1305_Encrypt(Plaintext, Key, Nonce)
+              </div>
+              <p className="text-gray-300">
+                <strong className="text-purple-300">Vantaggi:</strong><br />
+                • Veloce su <strong>tutti i dispositivi</strong> (mobile, IoT, CPU senza AES-NI)<br />
+                • Resistente ai timing attacks<br />
+                • Implementazione più semplice e sicura (meno bug)
+              </p>
+              <p className="text-gray-300">
+                <strong className="text-green-300">Uso:</strong> TLS 1.3 (preferito su mobile), WireGuard VPN, Google Chrome/Android
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6 mt-6">
+          <div className="bg-green-900/20 border-l-4 border-green-500 p-6 rounded-r-lg">
+            <strong className="text-green-300 text-lg">🏆 AES-GCM: Meglio se...</strong>
+            <ul className="text-gray-300 mt-3 space-y-2 text-sm">
+              <li>• Hai CPU con AES-NI (Intel/AMD moderne)</li>
+              <li>• Serve massima velocità su server</li>
+              <li>• Necessaria compatibilità universale</li>
+            </ul>
+          </div>
+
+          <div className="bg-purple-900/20 border-l-4 border-purple-500 p-6 rounded-r-lg">
+            <strong className="text-purple-300 text-lg">🏆 ChaCha20-Poly1305: Meglio se...</strong>
+            <ul className="text-gray-300 mt-3 space-y-2 text-sm">
+              <li>• CPU senza AES-NI (mobile, IoT, ARM)</li>
+              <li>• Serve semplicità di implementazione</li>
+              <li>• Priorità: sicurezza contro timing attacks</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="bg-blue-900/20 border-l-4 border-blue-500 p-6 rounded-r-lg">
+          <strong className="text-blue-300">💡 Nella Pratica</strong>
+          <p className="text-gray-300 mt-2">
+            TLS 1.3 supporta entrambi e <strong>negozia automaticamente</strong> il migliore:
+            AES-GCM su desktop/server, ChaCha20-Poly1305 su mobile. WhatsApp usa AES-256-GCM.
           </p>
         </div>
       </div>
@@ -209,7 +337,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 10: Cos'è RSA
   {
-    id: 20,
+    id: 21,
     title: "L'Algoritmo RSA",
     category: 'theory',
     content: () => (
@@ -263,7 +391,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 11: Base Matematica
   {
-    id: 21,
+    id: 22,
     title: 'La Matematica di RSA - Prerequisiti',
     category: 'theory',
     content: () => (

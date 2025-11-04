@@ -3,20 +3,22 @@ import { introSlides } from './slides/introSlides';
 import { theorySlides } from './slides/theorySlides';
 import { symmetricSlides } from './slides/symmetricSlides';
 import { asymmetricSlides } from './slides/asymmetricSlides';
+import { hybridSlides } from './slides/hybridSlides';
 import { opensslSlides } from './slides/opensslSlides';
 import { practiceSlides } from './slides/practiceSlides';
 import { advancedSlides } from './slides/advancedSlides';
 
 // Aggregazione di tutte le slide in un unico array
-// ORGANIZZAZIONE DIDATTICA: Introduzione → Simmetrica (più semplice) → Asimmetrica (più complessa) → Pratica → Avanzato
+// ORGANIZZAZIONE DIDATTICA: Introduzione → Simmetrica (più semplice) → Asimmetrica (più complessa) → Confronti/Ibrida → Pratica → Avanzato
 export const slides: Slide[] = [
   ...introSlides,       // ID 1-5 (Introduzione generale alla crittografia e confronto)
   ...symmetricSlides,   // ID 6-15 (Crittografia Simmetrica: DES, 3DES, AES - Prima perché più semplice)
-  ...theorySlides,      // ID 16-21 (Crittografia Asimmetrica: teoria, Alice/Bob, algoritmi, RSA intro, matematica)
-  ...asymmetricSlides,  // ID 22-26 (RSA: I 5 Passi, Esempi Numerici Dettagliati)
-  ...opensslSlides,     // ID 27-41 (OpenSSL - PRIMARY - Cross-platform)
-  ...practiceSlides,    // ID 42-61 (PowerShell - SECONDARY - Windows)
-  ...advancedSlides,    // ID 62-66 (Sicurezza, Limitazioni, Applicazioni)
+  ...theorySlides,      // ID 16-22 (Crittografia Asimmetrica: teoria, Alice/Bob, algoritmi, modalità AEAD, RSA intro, matematica)
+  ...asymmetricSlides,  // ID 23-27 (RSA: I 5 Passi, Esempi Numerici Dettagliati)
+  ...hybridSlides,      // ID 28-32 (Cifratura Ibrida: Confronti, Benchmarks, Teoria, WhatsApp, HTTPS/TLS)
+  ...opensslSlides,     // ID 33-47 (OpenSSL - PRIMARY - Cross-platform)
+  ...practiceSlides,    // ID 48-67 (PowerShell - SECONDARY - Windows)
+  ...advancedSlides,    // ID 68-72 (Sicurezza, Limitazioni, Applicazioni)
 ];
 
 // Funzione CRITICA per mapping corretto ID → posizione array
@@ -44,6 +46,7 @@ export const getSlideStats = () => {
       theory: slides.filter(s => s.category === 'theory').length,
       symmetric: slides.filter(s => s.category === 'symmetric').length,
       asymmetric: slides.filter(s => s.category === 'asymmetric').length,
+      hybrid: slides.filter(s => s.category === 'hybrid').length,
       openssl: slides.filter(s => s.category === 'openssl').length,
       practice: slides.filter(s => s.category === 'practice').length,
       advanced: slides.filter(s => s.category === 'advanced').length,

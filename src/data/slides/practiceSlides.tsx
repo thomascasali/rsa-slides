@@ -10,7 +10,7 @@ const CodeBlock = ({ children }: { children: string }) => (
 export const practiceSlides: Slide[] = [
   // Slide 27: Titolo Esercitazione
   {
-    id: 57,
+    id: 63,
     title: 'Esercitazione Pratica RSA',
     category: 'practice',
     content: () => (
@@ -42,7 +42,7 @@ export const practiceSlides: Slide[] = [
 
   // Slide 28: Preparazione Ambiente
   {
-    id: 58,
+    id: 64,
     title: "Preparazione dell'Ambiente",
     category: 'practice',
     content: () => (
@@ -101,7 +101,7 @@ Major  Minor  Build  Revision
 
   // Slide 29: Creazione Struttura
   {
-    id: 59,
+    id: 65,
     title: 'STEP 1: Creazione Struttura',
     category: 'practice',
     content: () => (
@@ -159,7 +159,7 @@ C:\\RSA_LAB
 
   // Slide 30: Setup Terminali
   {
-    id: 60,
+    id: 66,
     title: 'STEP 2: Preparazione Terminali',
     category: 'practice',
     content: () => (
@@ -225,7 +225,7 @@ PS C:\\RSA_Lab\\Bob>`}</CodeBlock>
 
   // Slide 31: Generazione Chiavi Alice
   {
-    id: 61,
+    id: 67,
     title: 'STEP 3: Generazione Chiavi Alice',
     category: 'practice',
     content: () => (
