@@ -423,7 +423,7 @@ cat messaggio.txt`}</CodeBlock>
         <div className="bg-teal-900/30 border-2 border-teal-700 rounded-lg p-6">
           <strong className="text-teal-300 text-lg mb-4 block">2️⃣ Alice cifra con la chiave PUBBLICA di Bob</strong>
           <CodeBlock language="bash">{`# Cifra il messaggio usando la chiave pubblica di Bob
-openssl rsautl -encrypt -inkey bob_public.pem -pubin -in messaggio.txt -out messaggio_cifrato.bin
+openssl pkeyutl -encrypt -inkey bob_public.pem -pubin -in messaggio.txt -out messaggio_cifrato.bin
 
 # Il file cifrato è binario, non leggibile
 ls -lh messaggio_cifrato.bin`}</CodeBlock>
@@ -482,7 +482,7 @@ ls ../Bob/messaggio_cifrato.bin`}</CodeBlock>
 cd ../Bob
 
 # Decifra usando la chiave privata di Bob
-openssl rsautl -decrypt -inkey bob_private.pem -in messaggio_cifrato.bin -out messaggio_decifrato.txt`}</CodeBlock>
+openssl pkeyutl -decrypt -inkey bob_private.pem -in messaggio_cifrato.bin -out messaggio_decifrato.txt`}</CodeBlock>
         </div>
 
         <div className="bg-teal-900/30 border-2 border-teal-700 rounded-lg p-6">
