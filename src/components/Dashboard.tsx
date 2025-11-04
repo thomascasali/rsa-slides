@@ -21,13 +21,13 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
     {
       id: 6,
       title: 'Crittografia Simmetrica',
-      description: 'DES, 3DES, AES e Confronti Prestazionali',
+      description: 'DES, 3DES, AES, Esempio Pratico e Confronto',
       icon: Key,
       color: 'green',
       category: 'symmetric',
     },
     {
-      id: 23,
+      id: 21,
       title: 'Algoritmo RSA',
       description: 'I 5 Passi di RSA ed Esempi Numerici',
       icon: Lock,
@@ -35,7 +35,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'asymmetric',
     },
     {
-      id: 28,
+      id: 26,
       title: 'Cifratura Ibrida',
       description: 'Confronti, Benchmarks, WhatsApp, HTTPS/TLS',
       icon: RefreshCw,
@@ -43,7 +43,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'hybrid',
     },
     {
-      id: 33,
+      id: 31,
       title: 'Pratica OpenSSL',
       description: 'Esercitazioni Cross-Platform con OpenSSL',
       icon: Terminal,
@@ -51,7 +51,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'openssl',
     },
     {
-      id: 48,
+      id: 46,
       title: 'Pratica PowerShell',
       description: 'Esercitazioni Windows con Alice e Bob',
       icon: Code,
@@ -59,7 +59,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'practice',
     },
     {
-      id: 68,
+      id: 66,
       title: 'Argomenti Avanzati',
       description: 'Sicurezza, Limitazioni e Applicazioni Reali',
       icon: Shield,

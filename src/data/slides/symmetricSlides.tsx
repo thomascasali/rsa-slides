@@ -12,7 +12,7 @@ const ComparisonTable = ({ children }: { children: React.ReactNode }) => (
 export const symmetricSlides: Slide[] = [
   // Slide 7: Titolo Crittografia Simmetrica
   {
-    id: 11,
+    id: 6,
     title: 'Crittografia Simmetrica',
     category: 'symmetric',
     content: () => (
@@ -39,7 +39,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 8: Cos'è la Crittografia Simmetrica
   {
-    id: 12,
+    id: 7,
     title: 'Cos\'è la Crittografia Simmetrica?',
     category: 'symmetric',
     content: () => (
@@ -101,7 +101,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 9: DES (Data Encryption Standard)
   {
-    id: 13,
+    id: 8,
     title: 'DES - Data Encryption Standard',
     category: 'symmetric',
     content: () => (
@@ -166,7 +166,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 10: 3DES (Triple DES)
   {
-    id: 14,
+    id: 9,
     title: '3DES - Triple DES',
     category: 'symmetric',
     content: () => (
@@ -243,7 +243,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 11: AES - Advanced Encryption Standard
   {
-    id: 15,
+    id: 10,
     title: 'AES - Advanced Encryption Standard',
     category: 'symmetric',
     content: () => (
@@ -315,81 +315,95 @@ export const symmetricSlides: Slide[] = [
     ),
   },
 
-  // Slide 12: Confronto DES vs 3DES vs AES
+  // Slide 11: Esempio Pratico AES
   {
     id: 11,
-    title: 'Confronto: DES vs 3DES vs AES',
+    title: 'Esempio Pratico: Come Funziona AES',
     category: 'symmetric',
     content: () => (
       <div className="space-y-6">
-        <h3 className="text-2xl font-bold text-green-300 mb-4">📊 Tabella Comparativa</h3>
-
-        <ComparisonTable>
-          <thead>
-            <tr className="bg-green-900/30 border-b-2 border-green-700">
-              <th className="text-left p-4 text-green-300 font-bold">Caratteristica</th>
-              <th className="text-left p-4 text-green-300 font-bold">DES</th>
-              <th className="text-left p-4 text-green-300 font-bold">3DES</th>
-              <th className="text-left p-4 text-green-300 font-bold">AES</th>
-            </tr>
-          </thead>
-          <tbody className="text-gray-300">
-            <tr className="border-b border-gray-700">
-              <td className="p-4 font-bold">Anno Adozione</td>
-              <td className="p-4">1977</td>
-              <td className="p-4">1998</td>
-              <td className="p-4">2001</td>
-            </tr>
-            <tr className="bg-gray-800/50 border-b border-gray-700">
-              <td className="p-4 font-bold">Lunghezza Chiave</td>
-              <td className="p-4">56 bit</td>
-              <td className="p-4">168 bit (effettivi: 112)</td>
-              <td className="p-4">128, 192, 256 bit</td>
-            </tr>
-            <tr className="border-b border-gray-700">
-              <td className="p-4 font-bold">Dimensione Blocco</td>
-              <td className="p-4">64 bit</td>
-              <td className="p-4">64 bit</td>
-              <td className="p-4">128 bit</td>
-            </tr>
-            <tr className="bg-gray-800/50 border-b border-gray-700">
-              <td className="p-4 font-bold">Numero di Rounds</td>
-              <td className="p-4">16</td>
-              <td className="p-4">48 (16×3)</td>
-              <td className="p-4">10/12/14</td>
-            </tr>
-            <tr className="border-b border-gray-700">
-              <td className="p-4 font-bold">Sicurezza</td>
-              <td className="p-4 text-red-400">❌ Insicuro</td>
-              <td className="p-4 text-yellow-400">⚠️ Obsoleto</td>
-              <td className="p-4 text-green-400">✅ Sicuro</td>
-            </tr>
-            <tr className="bg-gray-800/50 border-b border-gray-700">
-              <td className="p-4 font-bold">Velocità Relativa</td>
-              <td className="p-4">Baseline (1x)</td>
-              <td className="p-4 text-yellow-300">~0.33x (3x più lento)</td>
-              <td className="p-4 text-green-300">~5x (più veloce)</td>
-            </tr>
-            <tr className="border-b border-gray-700">
-              <td className="p-4 font-bold">Supporto Hardware</td>
-              <td className="p-4">Legacy</td>
-              <td className="p-4">Legacy</td>
-              <td className="p-4 text-green-300">AES-NI (CPU moderne)</td>
-            </tr>
-            <tr className="bg-gray-800/50">
-              <td className="p-4 font-bold">Status 2025</td>
-              <td className="p-4 text-red-400">Deprecato (2005)</td>
-              <td className="p-4 text-yellow-400">Deprecato (2023)</td>
-              <td className="p-4 text-green-400">Standard attuale</td>
-            </tr>
-          </tbody>
-        </ComparisonTable>
-
         <div className="bg-green-900/20 border-l-4 border-green-500 p-6 rounded-r-lg">
-          <strong className="text-green-300 text-xl">🏆 Vincitore: AES</strong><br />
+          <h3 className="text-green-300 text-2xl font-bold mb-3">🔐 Scenario: Alice invia un messaggio segreto a Bob</h3>
+          <p className="text-gray-300 text-lg">
+            Alice e Bob condividono una <strong>chiave segreta AES-128</strong> (128 bit = 16 byte)
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <div className="bg-blue-900/30 border-2 border-blue-700 rounded-lg p-6">
+            <div className="flex items-center gap-4 mb-3">
+              <span className="inline-block w-10 h-10 bg-blue-600 text-white rounded-full text-center leading-10 font-bold">1</span>
+              <strong className="text-blue-300 text-lg">Messaggio in Chiaro</strong>
+            </div>
+            <div className="bg-gray-900 p-4 rounded-lg font-mono text-sm text-gray-300">
+              Plaintext: <strong className="text-blue-300">"Incontriamoci alle 15:00 in aula lab"</strong>
+            </div>
+          </div>
+
+          <div className="bg-purple-900/30 border-2 border-purple-700 rounded-lg p-6">
+            <div className="flex items-center gap-4 mb-3">
+              <span className="inline-block w-10 h-10 bg-purple-600 text-white rounded-full text-center leading-10 font-bold">2</span>
+              <strong className="text-purple-300 text-lg">Chiave Segreta Condivisa (AES-128)</strong>
+            </div>
+            <div className="bg-gray-900 p-4 rounded-lg font-mono text-sm text-gray-300">
+              Key (hex): <strong className="text-purple-300">2b7e151628aed2a6abf7158809cf4f3c</strong><br />
+              <span className="text-gray-500 text-xs">// 16 byte = 128 bit</span>
+            </div>
+          </div>
+
+          <div className="bg-green-900/30 border-2 border-green-700 rounded-lg p-6">
+            <div className="flex items-center gap-4 mb-3">
+              <span className="inline-block w-10 h-10 bg-green-600 text-white rounded-full text-center leading-10 font-bold">3</span>
+              <strong className="text-green-300 text-lg">Cifratura con AES-128</strong>
+            </div>
+            <div className="bg-gray-900 p-4 rounded-lg font-mono text-sm text-gray-300">
+              <strong className="text-green-300">Ciphertext = AES_Encrypt(Plaintext, Key)</strong><br />
+              <span className="text-gray-500 text-xs mt-2 block">// AES processa blocchi da 128 bit (16 byte)</span><br />
+              <span className="text-gray-500 text-xs">// Ogni blocco passa attraverso 10 rounds di trasformazioni</span>
+            </div>
+          </div>
+
+          <div className="bg-orange-900/30 border-2 border-orange-700 rounded-lg p-6">
+            <div className="flex items-center gap-4 mb-3">
+              <span className="inline-block w-10 h-10 bg-orange-600 text-white rounded-full text-center leading-10 font-bold">4</span>
+              <strong className="text-orange-300 text-lg">Messaggio Cifrato</strong>
+            </div>
+            <div className="bg-gray-900 p-4 rounded-lg font-mono text-sm break-all text-gray-300">
+              Ciphertext (hex): <strong className="text-orange-300">8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b4a8f4f3c2b7e1516...</strong><br />
+              <span className="text-gray-500 text-xs mt-2 block">// Completamente illeggibile senza la chiave!</span>
+            </div>
+          </div>
+
+          <div className="text-center text-2xl text-green-400 my-6">
+            Alice invia → <strong className="text-3xl text-orange-300">Ciphertext</strong> → Bob
+          </div>
+
+          <div className="bg-indigo-900/30 border-2 border-indigo-700 rounded-lg p-6">
+            <div className="flex items-center gap-4 mb-3">
+              <span className="inline-block w-10 h-10 bg-indigo-600 text-white rounded-full text-center leading-10 font-bold">5</span>
+              <strong className="text-indigo-300 text-lg">Bob Decifra con la Stessa Chiave</strong>
+            </div>
+            <div className="bg-gray-900 p-4 rounded-lg font-mono text-sm text-gray-300">
+              <strong className="text-indigo-300">Plaintext = AES_Decrypt(Ciphertext, Key)</strong><br />
+              <span className="text-gray-500 text-xs mt-2 block">// Usa la STESSA chiave segreta per decifrare</span><br />
+              Risultato: <strong className="text-blue-300">"Incontriamoci alle 15:00 in aula lab"</strong> ✅
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-yellow-900/20 border-l-4 border-yellow-500 p-6 rounded-r-lg">
+          <strong className="text-yellow-300 text-lg">🔒 Sicurezza:</strong><br />
           <p className="text-gray-300 mt-2">
-            AES offre il miglior equilibrio tra <strong>sicurezza, velocità e flessibilità</strong>.
-            È lo standard consigliato per tutte le nuove implementazioni.
+            Senza la chiave corretta, un attaccante che intercetta il ciphertext NON può decifrarlo.
+            Con AES-128, ci sono <strong>2<sup>128</sup> = 340 undecilioni</strong> di chiavi possibili!
+          </p>
+        </div>
+
+        <div className="bg-red-900/20 border-l-4 border-red-500 p-6 rounded-r-lg">
+          <strong className="text-red-300 text-lg">⚠️ Problema:</strong><br />
+          <p className="text-gray-300 mt-2">
+            Come fanno Alice e Bob a <strong>condividere la chiave segreta</strong> inizialmente?
+            Se qualcuno intercetta la chiave durante lo scambio, può decifrare tutti i messaggi!
           </p>
         </div>
       </div>
@@ -398,7 +412,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 12: Confronto DES vs 3DES vs AES
   {
-    id: 11,
+    id: 12,
     title: 'Confronto: DES vs 3DES vs AES',
     category: 'symmetric',
     content: () => (
@@ -479,7 +493,7 @@ export const symmetricSlides: Slide[] = [
 
   // Slide 15: Conclusioni Crittografia Simmetrica
   {
-    id: 15,
+    id: 13,
     title: 'Riepilogo: Crittografia Simmetrica',
     category: 'symmetric',
     content: () => (

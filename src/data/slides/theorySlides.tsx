@@ -3,7 +3,7 @@ import type { Slide } from '../../types';
 export const theorySlides: Slide[] = [
   // Slide 6: Intro alla Crittografia Asimmetrica
   {
-    id: 16,
+    id: 14,
     title: 'La Crittografia Asimmetrica',
     category: 'theory',
     content: () => (
@@ -45,7 +45,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 7: Scambio Chiavi
   {
-    id: 17,
+    id: 15,
     title: 'Come Funziona lo Scambio',
     category: 'theory',
     content: () => (
@@ -94,7 +94,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 8: Comunicazione Sicura
   {
-    id: 18,
+    id: 16,
     title: 'Comunicazione Sicura con Crittografia Asimmetrica',
     category: 'theory',
     content: () => (
@@ -143,7 +143,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 9: Gli Algoritmi Asimmetrici
   {
-    id: 19,
+    id: 17,
     title: 'Algoritmi di Crittografia Asimmetrica',
     category: 'theory',
     content: () => (
@@ -228,7 +228,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 9b: Modalità di Cifratura Moderne (AES-GCM, ChaCha20-Poly1305)
   {
-    id: 20,
+    id: 18,
     title: 'Modalità di Cifratura Moderne: AEAD',
     category: 'theory',
     content: () => (
@@ -337,7 +337,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 10: Cos'è RSA
   {
-    id: 21,
+    id: 19,
     title: "L'Algoritmo RSA",
     category: 'theory',
     content: () => (
@@ -391,7 +391,7 @@ export const theorySlides: Slide[] = [
 
   // Slide 11: Base Matematica
   {
-    id: 22,
+    id: 20,
     title: 'La Matematica di RSA - Prerequisiti',
     category: 'theory',
     content: () => (
