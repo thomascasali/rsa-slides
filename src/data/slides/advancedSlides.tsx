@@ -246,57 +246,68 @@ export const advancedSlides: Slide[] = [
     ),
   },
 
-  // Slide 51: Conclusioni Finali
+  // Slide 30: Dal RSA alla Cifratura Ibrida
   {
     id: 30,
-    title: 'Conclusioni',
+    title: 'RSA nel Mondo Reale: Il Problema delle Prestazioni',
     category: 'asymmetric',
     content: () => (
-      <div className="flex flex-col items-center justify-center h-full space-y-8 py-12">
-        <h2 className="text-5xl font-bold text-red-300 mb-4 text-center">
-          Cosa Abbiamo Imparato
-        </h2>
-
-        <div className="bg-green-900/20 border-l-4 border-green-500 p-8 rounded-r-lg max-w-3xl w-full">
-          <strong className="text-green-300 text-2xl">✅ Concetti Chiave:</strong>
-          <ul className="mt-6 space-y-3 text-gray-300 text-lg">
-            <li>• Differenza tra crittografia <strong>simmetrica</strong> e <strong>asimmetrica</strong></li>
-            <li>• Coppia di chiavi: <strong>pubblica</strong> (condivisa) e <strong>privata</strong> (segreta)</li>
-            <li>• I <strong>5 passi</strong> per generare chiavi RSA</li>
-            <li>• Formule di <strong>cifratura</strong> (C = M<sup>e</sup> mod n) e <strong>decifratura</strong> (M = C<sup>d</sup> mod n)</li>
-            <li>• Sicurezza basata sulla difficoltà di <strong>fattorizzare numeri grandi</strong></li>
+      <div className="space-y-6">
+        <div className="bg-green-900/20 border-l-4 border-green-500 p-6 rounded-r-lg">
+          <strong className="text-green-300 text-2xl">✅ Cosa Abbiamo Visto su RSA:</strong>
+          <ul className="mt-4 space-y-2 text-gray-300 text-lg">
+            <li>• RSA risolve il <strong>problema dello scambio chiavi</strong></li>
+            <li>• Permette <strong>cifratura</strong> e <strong>firme digitali</strong></li>
+            <li>• È <strong>sicuro</strong> (basato sulla fattorizzazione)</li>
+            <li>• È usato ovunque: HTTPS, email, VPN, blockchain</li>
           </ul>
         </div>
 
-        <div className="bg-blue-900/20 border-l-4 border-blue-500 p-8 rounded-r-lg max-w-3xl w-full">
-          <strong className="text-blue-300 text-2xl">📚 Prossimo Passo:</strong>
+        <div className="bg-yellow-900/20 border-l-4 border-yellow-500 p-6 rounded-r-lg">
+          <strong className="text-yellow-300 text-2xl">⚠️ Ma C'è un Problema...</strong>
           <p className="text-gray-300 mt-4 text-lg">
-            Hai completato sia la <strong>teoria</strong> che la <strong>pratica</strong> dell'algoritmo RSA.
-            Ora hai le competenze per:
+            Ricordi i benchmark? RSA è <strong className="text-red-300">~25.000 volte più lento</strong> di AES per cifrare dati!
           </p>
-          <ul className="mt-4 space-y-2 text-gray-300">
-            <li>• Implementare sistemi di cifratura sicuri</li>
-            <li>• Comprendere come funziona HTTPS e SSL/TLS</li>
-            <li>• Utilizzare firme digitali per autenticare documenti</li>
-            <li>• Valutare la sicurezza di sistemi crittografici</li>
+          <div className="mt-4 space-y-2 text-gray-300">
+            <li>• <strong>AES-256:</strong> cifra 1 GB in ~0.3 secondi</li>
+            <li>• <strong>RSA-2048:</strong> cifra 1 GB in ~14 ore (se fosse possibile!)</li>
+            <li>• <strong>RSA può cifrare max ~245 byte</strong> per operazione con chiavi 2048 bit</li>
+          </div>
+        </div>
+
+        <div className="bg-red-900/30 border-2 border-red-700 rounded-lg p-6 mt-6">
+          <strong className="text-red-300 text-2xl">❌ Scenario Impossibile:</strong>
+          <p className="text-gray-300 mt-4 text-lg">
+            Immagina di voler cifrare un <strong>file video da 500 MB</strong> con RSA-2048:
+          </p>
+          <div className="bg-gray-900 p-4 rounded-lg mt-4 font-mono text-sm text-gray-300">
+            500 MB = 500.000.000 byte<br />
+            RSA può cifrare max 245 byte per operazione<br />
+            <span className="text-red-300">→ Servirebbero 2.040.816 operazioni RSA!</span><br />
+            <span className="text-red-300">→ Tempo stimato: ~14 giorni</span> 😱
+          </div>
+        </div>
+
+        <div className="bg-indigo-900/20 border-l-4 border-indigo-500 p-6 rounded-r-lg mt-6">
+          <strong className="text-indigo-300 text-2xl">💡 La Soluzione: Cifratura Ibrida</strong>
+          <p className="text-gray-300 mt-4 text-lg">
+            Nel mondo reale, <strong>RSA e AES lavorano insieme</strong>:
+          </p>
+          <ul className="mt-4 space-y-3 text-gray-300">
+            <li>• <strong className="text-green-300">AES</strong> cifra i dati (veloce, efficiente)</li>
+            <li>• <strong className="text-purple-300">RSA</strong> cifra solo la chiave AES (piccola, 32 byte)</li>
+            <li>• Si ottiene: <strong className="text-blue-300">Sicurezza di RSA + Velocità di AES</strong></li>
           </ul>
         </div>
 
-        <div className="text-center mt-12">
-          <div className="text-8xl mb-6">🎓</div>
-          <h2 className="text-4xl font-bold text-red-300 mb-4">Corso Completato!</h2>
-          <p className="text-xl text-gray-400">
-            Ora sei pronto per applicare RSA in scenari reali
+        <div className="text-center mt-8 p-6 bg-gradient-to-r from-purple-900/40 to-indigo-900/40 rounded-lg border-2 border-indigo-600">
+          <h3 className="text-3xl font-bold text-indigo-300 mb-4">
+            🔄 Prossimo: Cifratura Ibrida
+          </h3>
+          <p className="text-gray-300 text-lg">
+            Scopriamo come <strong>WhatsApp, HTTPS e tutti i sistemi moderni</strong><br />
+            combinano RSA e AES per ottenere il meglio di entrambi i mondi!
           </p>
-        </div>
-
-        <div className="bg-yellow-900/20 border-l-4 border-yellow-500 p-6 rounded-r-lg max-w-3xl w-full text-center">
-          <strong className="text-yellow-300 text-lg">📊 Statistiche Corso:</strong><br />
-          <span className="text-gray-300 text-lg mt-2 block">
-            <strong className="text-3xl text-red-300">36</strong> slide totali •
-            <strong className="text-3xl text-red-300"> 20</strong> esercitazioni pratiche •
-            <strong className="text-3xl text-red-300"> 5</strong> categorie tematiche
-          </span>
         </div>
       </div>
     ),
