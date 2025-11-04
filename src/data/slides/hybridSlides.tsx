@@ -12,7 +12,7 @@ const ComparisonTable = ({ children }: { children: React.ReactNode }) => (
 export const hybridSlides: Slide[] = [
   // Slide 28: Simmetrica vs Asimmetrica - Confronto Dettagliato
   {
-    id: 26,
+    id: 31,
     title: 'Simmetrica vs Asimmetrica: Confronto Completo',
     category: 'hybrid',
     content: () => (
@@ -84,7 +84,7 @@ export const hybridSlides: Slide[] = [
 
   // Slide 28: Benchmark Prestazionali
   {
-    id: 27,
+    id: 32,
     title: 'Benchmark Prestazionali: AES vs RSA',
     category: 'hybrid',
     content: () => (
@@ -155,7 +155,7 @@ export const hybridSlides: Slide[] = [
 
   // Slide 29: Cifratura Ibrida - Teoria
   {
-    id: 28,
+    id: 33,
     title: 'Cifratura Ibrida: Il Meglio di Entrambi i Mondi',
     category: 'hybrid',
     content: () => (
@@ -246,7 +246,7 @@ export const hybridSlides: Slide[] = [
 
   // Slide 30: Esempio Pratico WhatsApp
   {
-    id: 29,
+    id: 34,
     title: 'Esempio Reale: Come Funziona WhatsApp',
     category: 'hybrid',
     content: () => (
@@ -350,7 +350,7 @@ export const hybridSlides: Slide[] = [
 
   // Slide 31: HTTPS/TLS - Altro Esempio
   {
-    id: 30,
+    id: 35,
     title: 'Come Funziona HTTPS (TLS 1.3)',
     category: 'hybrid',
     content: () => (

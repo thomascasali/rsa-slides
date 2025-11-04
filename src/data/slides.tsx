@@ -9,16 +9,16 @@ import { practiceSlides } from './slides/practiceSlides';
 import { advancedSlides } from './slides/advancedSlides';
 
 // Aggregazione di tutte le slide in un unico array
-// ORGANIZZAZIONE DIDATTICA: Introduzione → Simmetrica (più semplice) → Asimmetrica (più complessa) → Confronti/Ibrida → Pratica → Avanzato
+// ORGANIZZAZIONE DIDATTICA: Introduzione → Simmetrica → Asimmetrica/RSA → Ibrida → Pratica
 export const slides: Slide[] = [
   ...introSlides,       // ID 1-5 (Introduzione generale alla crittografia e confronto)
   ...symmetricSlides,   // ID 6-13 (Crittografia Simmetrica: DES, 3DES, AES, Esempio Pratico, Confronto - 8 slide)
-  ...theorySlides,      // ID 14-20 (Crittografia Asimmetrica: teoria, Alice/Bob, algoritmi, modalità AEAD, RSA intro, matematica - 7 slide)
-  ...asymmetricSlides,  // ID 21-25 (RSA: I 5 Passi, Esempi Numerici Dettagliati - 5 slide)
-  ...hybridSlides,      // ID 26-30 (Cifratura Ibrida: Confronti, Benchmarks, Teoria, WhatsApp, HTTPS/TLS - 5 slide)
-  ...opensslSlides,     // ID 31-45 (OpenSSL - PRIMARY - Cross-platform - 15 slide)
-  ...practiceSlides,    // ID 46-65 (PowerShell - SECONDARY - Windows - 20 slide)
-  ...advancedSlides,    // ID 66-70 (Sicurezza, Limitazioni, Applicazioni - 5 slide)
+  ...theorySlides,      // ID 14-20 (Crittografia Asimmetrica: teoria, Alice/Bob, algoritmi, modalità AEAD, RSA intro - 7 slide)
+  ...asymmetricSlides,  // ID 21-25 (RSA Generazione Chiavi: I 5 Passi, Esempi Numerici Dettagliati - 5 slide)
+  ...advancedSlides,    // ID 26-30 (RSA Avanzato: Sicurezza, Fattorizzazione, Dimensioni Chiavi, Limitazioni, Applicazioni - 5 slide)
+  ...hybridSlides,      // ID 31-35 (Cifratura Ibrida: Confronti, Benchmarks, Teoria, WhatsApp, HTTPS/TLS - 5 slide)
+  ...opensslSlides,     // ID 36-50 (OpenSSL - PRIMARY - Cross-platform - 15 slide)
+  ...practiceSlides,    // ID 51-70 (PowerShell - SECONDARY - Windows - 20 slide)
 ];
 
 // Funzione CRITICA per mapping corretto ID → posizione array

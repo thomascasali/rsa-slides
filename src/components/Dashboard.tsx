@@ -1,4 +1,4 @@
-import { Lock, Book, Code, Zap, Shield, ArrowRight, Terminal, Key, RefreshCw } from 'lucide-react';
+import { Lock, Book, Code, Zap, ArrowRight, Terminal, Key, RefreshCw } from 'lucide-react';
 import { getSlideStats, getSlidePosition } from '../data/slides';
 
 interface DashboardProps {
@@ -27,15 +27,15 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'symmetric',
     },
     {
-      id: 21,
+      id: 19,
       title: 'Algoritmo RSA',
-      description: 'I 5 Passi di RSA ed Esempi Numerici',
+      description: 'Introduzione RSA, I 5 Passi e Sicurezza',
       icon: Lock,
       color: 'purple',
       category: 'asymmetric',
     },
     {
-      id: 26,
+      id: 31,
       title: 'Cifratura Ibrida',
       description: 'Confronti, Benchmarks, WhatsApp, HTTPS/TLS',
       icon: RefreshCw,
@@ -43,7 +43,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'hybrid',
     },
     {
-      id: 31,
+      id: 36,
       title: 'Pratica OpenSSL',
       description: 'Esercitazioni Cross-Platform con OpenSSL',
       icon: Terminal,
@@ -51,20 +51,12 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
       category: 'openssl',
     },
     {
-      id: 46,
+      id: 51,
       title: 'Pratica PowerShell',
       description: 'Esercitazioni Windows con Alice e Bob',
       icon: Code,
       color: 'orange',
       category: 'practice',
-    },
-    {
-      id: 66,
-      title: 'Argomenti Avanzati',
-      description: 'Sicurezza, Limitazioni e Applicazioni Reali',
-      icon: Shield,
-      color: 'red',
-      category: 'advanced',
     },
   ];
 
@@ -140,7 +132,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Statistiche */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-12">
           <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/30 border border-blue-700 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold text-blue-300">{stats.total}</div>
             <div className="text-gray-400 mt-2">Totali</div>
@@ -155,7 +147,7 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
           </div>
           <div className="bg-gradient-to-br from-purple-900/30 to-purple-800/30 border border-purple-700 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold text-purple-300">{stats.byCategory.asymmetric}</div>
-            <div className="text-gray-400 mt-2">Asimmetrica</div>
+            <div className="text-gray-400 mt-2">RSA</div>
           </div>
           <div className="bg-gradient-to-br from-indigo-900/30 to-indigo-800/30 border border-indigo-700 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold text-indigo-300">{stats.byCategory.hybrid}</div>
@@ -168,10 +160,6 @@ export function Dashboard({ onGoToSlide }: DashboardProps) {
           <div className="bg-gradient-to-br from-orange-900/30 to-orange-800/30 border border-orange-700 rounded-lg p-6 text-center">
             <div className="text-4xl font-bold text-orange-300">{stats.byCategory.practice}</div>
             <div className="text-gray-400 mt-2">PowerShell</div>
-          </div>
-          <div className="bg-gradient-to-br from-red-900/30 to-red-800/30 border border-red-700 rounded-lg p-6 text-center">
-            <div className="text-4xl font-bold text-red-300">{stats.byCategory.advanced}</div>
-            <div className="text-gray-400 mt-2">Avanzato</div>
           </div>
         </div>
 

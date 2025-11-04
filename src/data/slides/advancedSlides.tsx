@@ -1,11 +1,11 @@
 import type { Slide } from '../../types';
 
 export const advancedSlides: Slide[] = [
-  // Slide 47: Perché è Sicuro
+  // Slide 26: Perché RSA è Sicuro
   {
-    id: 66,
+    id: 26,
     title: 'Perché RSA è Sicuro?',
-    category: 'advanced',
+    category: 'asymmetric',
     content: () => (
       <div className="space-y-6">
         <h3 className="text-2xl font-bold text-red-300 mb-4">Il Problema della Fattorizzazione</h3>
@@ -58,9 +58,9 @@ export const advancedSlides: Slide[] = [
 
   // Slide 48: Dimensioni Chiavi
   {
-    id: 67,
+    id: 27,
     title: 'Dimensioni delle Chiavi',
-    category: 'advanced',
+    category: 'asymmetric',
     content: () => (
       <div className="space-y-6">
         <h3 className="text-2xl font-bold text-red-300 mb-4">Confronto tra Esempio Didattico e Uso Reale</h3>
@@ -127,9 +127,9 @@ export const advancedSlides: Slide[] = [
 
   // Slide 49: Limitazioni
   {
-    id: 68,
+    id: 28,
     title: 'Limitazioni di RSA',
-    category: 'advanced',
+    category: 'asymmetric',
     content: () => (
       <div className="space-y-6">
         <h3 className="text-2xl font-bold text-red-300 mb-4">Cosa NON può fare RSA (o fa con difficoltà)</h3>
@@ -178,9 +178,9 @@ export const advancedSlides: Slide[] = [
 
   // Slide 35: Applicazioni Reali
   {
-    id: 69,
+    id: 29,
     title: 'Applicazioni Reali di RSA',
-    category: 'advanced',
+    category: 'asymmetric',
     content: () => (
       <div className="space-y-6">
         <h3 className="text-2xl font-bold text-red-300 mb-4">Dove usiamo RSA ogni giorno (spesso senza saperlo)</h3>
@@ -248,9 +248,9 @@ export const advancedSlides: Slide[] = [
 
   // Slide 51: Conclusioni Finali
   {
-    id: 70,
+    id: 30,
     title: 'Conclusioni',
-    category: 'advanced',
+    category: 'asymmetric',
     content: () => (
       <div className="flex flex-col items-center justify-center h-full space-y-8 py-12">
         <h2 className="text-5xl font-bold text-red-300 mb-4 text-center">
